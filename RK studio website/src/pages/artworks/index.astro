@@ -1,0 +1,69 @@
+---
+import Base from '../../layouts/Base.astro';
+import ArtworkCard from '../../components/ArtworkCard.astro';
+import { getArtworks } from '../../lib/content';
+
+const artworks = await getArtworks();
+const cats = Array.from(new Set(artworks.map((w) => w.data.category)));
+const filters = [['all', 'All'], ['onview', 'On view'], ...cats.map((c) => [c.toLowerCase(), c + 's'])];
+---
+<Base current="artworks" title="On view — Ron Klimovsky Studio" description="Current paintings, drawings and works on paper from the studio of Ron Klimovsky.">
+  <section class="onview">
+    <header class="ov-header">
+      <div class="eyebrow">On view · {new Date().getFullYear()}</div>
+      <h1 class="ov-h1">Currently in <em>the studio</em></h1>
+    </header>
+
+    <div class="ov-filters" data-filters>
+      {filters.map(([id, label], i) => (
+        <button type="button" class:list={['chip', { active: i === 0 }]} data-filter={id}>{label}</button>
+      ))}
+    </div>
+
+    <div class="ov-grid" data-grid>
+      {artworks.map((w, i) => <ArtworkCard work={w} index={i} />)}
+    </div>
+    <div class="ov-empty" data-empty hidden>Nothing in this room, at the moment.</div>
+  </section>
+</Base>
+
+<style>
+  .onview { position: relative; padding: 64px 32px 144px; max-width: 1280px; margin: 0 auto; }
+  .ov-header { margin-bottom: 40px; }
+  .eyebrow { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.18em; text-transform: uppercase; }
+  .ov-h1 { font-family: var(--font-display); font-size: clamp(40px, 5vw, 76px); line-height: 1.0; letter-spacing: -0.03em; margin: 12px 0 0; font-weight: 400; max-width: 16ch; }
+  .ov-h1 em { font-style: italic; color: var(--ink-2); }
+  .ov-filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 40px; }
+  .chip { padding: 8px 14px; border-radius: 999px; border: 0; cursor: pointer; font-family: var(--font-ui); font-size: 13px; font-weight: 500; white-space: nowrap; background: var(--bone); color: var(--ink-2); box-shadow: inset 0 0 0 1px var(--mist); transition: all 240ms var(--ease-out); }
+  .chip.active { background: var(--ink-1); color: var(--bone); box-shadow: var(--shadow-sm); }
+  .ov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 32px; }
+  .ov-empty { padding: 80px 0; text-align: center; color: var(--ink-3); font-style: italic; font-family: var(--font-display); font-size: 20px; }
+  @media (max-width: 520px) { .onview { padding: 40px 18px 96px; } .ov-grid { grid-template-columns: 1fr; gap: 22px; } }
+</style>
+
+<script>
+  const filters = document.querySelector('[data-filters]');
+  const grid = document.querySelector('[data-grid]');
+  const empty = document.querySelector('[data-empty]');
+  if (filters && grid) {
+    filters.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest('[data-filter]') as HTMLElement | null;
+      if (!btn) return;
+      filters.querySelectorAll('.chip').forEach((c) => c.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      let shown = 0;
+      grid.querySelectorAll('.art-card').forEach((card) => {
+        const el = card as HTMLElement;
+        const cat = (el.dataset.category || '').toLowerCase();
+        const status = el.dataset.status || '';
+        let show = true;
+        if (f === 'onview') show = status === 'On view';
+        else if (f !== 'all') show = cat === f;
+        el.style.display = show ? '' : 'none';
+        if (show) shown++;
+      });
+      if (empty) (empty as HTMLElement).hidden = shown !== 0;
+    });
+  }
+</script>

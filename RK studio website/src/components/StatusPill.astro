@@ -1,0 +1,42 @@
+---
+// Rotating "live activity" pill. States rotate client-side every ~4.2s.
+---
+<div class="lg-strong status-pill" data-status-pill>
+  <span class="status-dot"></span>
+  <div class="status-text">
+    <span class="status-label" data-status-label>Painting</span>
+    <span class="status-detail" data-status-detail>Hours, before noon</span>
+  </div>
+</div>
+
+<style>
+  .status-pill { display: inline-flex; align-items: center; gap: 12px; padding: 10px 18px 10px 14px; border-radius: 999px; font-size: 13px; }
+  .status-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent-3, #FF7A3D); box-shadow: 0 0 0 4px rgba(255,122,61,0.13), 0 0 12px rgba(255,122,61,0.6); flex: 0 0 auto; animation: statusPulse 2s ease-in-out infinite; }
+  .status-text { display: flex; flex-direction: column; line-height: 1.15; white-space: nowrap; }
+  .status-label { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
+  .status-detail { color: var(--ink-1); font-family: var(--font-display); font-style: italic; font-size: 14px; }
+  @keyframes statusPulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.25); opacity: .85; } }
+  @media (prefers-reduced-motion: reduce) { .status-dot { animation: none; } }
+</style>
+
+<script>
+  const states = [
+    { dot: 'var(--accent-3, #FF7A3D)', label: 'Painting', detail: 'Hours, before noon' },
+    { dot: '#8A9A5B', label: 'On view', detail: 'By appointment, Tue — Sun' },
+    { dot: 'var(--accent-2, #FFB347)', label: 'Studio', detail: 'Open · spring 2026' },
+  ];
+  document.querySelectorAll('[data-status-pill]').forEach((pill) => {
+    const dot = pill.querySelector('.status-dot');
+    const label = pill.querySelector('[data-status-label]');
+    const detail = pill.querySelector('[data-status-detail]');
+    let i = 0;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+    setInterval(() => {
+      i = (i + 1) % states.length;
+      dot.style.background = states[i].dot;
+      label.textContent = states[i].label;
+      detail.textContent = states[i].detail;
+    }, 4200);
+  });
+</script>

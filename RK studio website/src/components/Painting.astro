@@ -1,0 +1,43 @@
+---
+// Painting — shows a real artwork photo when `image` is set, otherwise a soft
+// deterministic placeholder in the studio palette (so the layout looks right
+// before photography is uploaded via the CMS).
+interface Props {
+  image?: string;
+  alt?: string;
+  title?: string;
+  year?: number | string;
+  aspect?: string;
+  frame?: boolean;
+  class?: string;
+}
+const { image, alt = '', title = '', year = '', aspect = '4/5', frame = true, class: cls = '' } = Astro.props;
+
+const PALETTES = [
+  ['#FFD4B8', '#FF9A75', '#C44A1F', '#2C1208', 'linear-gradient(155deg,#FFE2C9 0%,#FF9A75 38%,#C44A1F 78%,#3B1610 100%)'],
+  ['#FFF4DC', '#FFB347', '#E8801A', '#5A2A08', 'linear-gradient(165deg,#FFF4DC 0%,#FFD188 45%,#E8801A 100%)'],
+  ['#4A7FB8', '#C99AAF', '#FF9A75', '#1B2638', 'linear-gradient(170deg,#6E96C4 0%,#C99AAF 50%,#F2B499 100%)'],
+  ['#2B2418', '#C99A3D', '#F4E4B8', '#0E0A06', 'linear-gradient(165deg,#1F1A12 0%,#6E5A2E 50%,#F4E4B8 100%)'],
+  ['#ECE5DB', '#B8A893', '#80705F', '#2A2218', 'linear-gradient(150deg,#ECE5DB 0%,#B8A893 60%,#5A4E40 100%)'],
+  ['#E8DFD0', '#A8B4C8', '#5A6B8A', '#1A2030', 'linear-gradient(180deg,#E8DFD0 0%,#A8B4C8 50%,#1A2030 100%)'],
+];
+const seed = (title || 'x').split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+const p = PALETTES[seed % PALETTES.length];
+const frameShadow = frame
+  ? '0 30px 60px -20px rgba(26,20,16,0.35), 0 2px 8px rgba(26,20,16,0.08), inset 0 0 0 1px rgba(0,0,0,0.04)'
+  : 'inset 0 0 0 1px rgba(0,0,0,0.04)';
+---
+<div class={'painting ' + cls} style={`position:relative;aspect-ratio:${aspect};border-radius:${frame ? '4px' : '0'};overflow:hidden;box-shadow:${frameShadow};background:${image ? 'var(--paper-2)' : p[4]};`}>
+  {image ? (
+    <img src={image} alt={alt} loading="lazy" decoding="async"
+         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;" />
+  ) : (
+    <>
+      <div style={`position:absolute;left:-4%;top:28%;width:62%;height:52%;background:radial-gradient(ellipse at center, ${p[0]}88 0%, ${p[1]}44 40%, transparent 70%);filter:blur(20px);mix-blend-mode:soft-light;`}></div>
+      <div style={`position:absolute;right:12%;top:16%;width:24%;height:42%;background:linear-gradient(180deg, ${p[0]} 0%, ${p[1]}aa 60%, transparent 100%);filter:blur(8px);border-radius:2px;opacity:.65;`}></div>
+      <div style={`position:absolute;left:0;right:0;bottom:0;height:32%;background:linear-gradient(180deg, transparent 0%, ${p[3]}55 60%, ${p[3]}88 100%);`}></div>
+      <div style="position:absolute;inset:0;opacity:.18;mix-blend-mode:overlay;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0px,rgba(255,255,255,.03) 1px,transparent 1px,transparent 2px),repeating-linear-gradient(90deg,rgba(0,0,0,.04) 0px,rgba(0,0,0,.04) 1px,transparent 1px,transparent 2px);"></div>
+      <div style="position:absolute;right:10px;bottom:8px;font-family:var(--font-display);font-style:italic;font-size:10px;color:rgba(0,0,0,.35);letter-spacing:.02em;">R.K. {year}</div>
+    </>
+  )}
+</div>

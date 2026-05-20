@@ -1,0 +1,13 @@
+# Netlify build settings for the Ron Klimovsky Studio site
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Pretty 404
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404

@@ -1,0 +1,20 @@
+# Ron Klimovsky Studio
+
+> Ron Klimovsky (also known as ARC) is a multidisciplinary visual artist working
+> mainly in the US. This is the official studio website — paintings, drawings,
+> editions, exhibitions, and a short biography, published direct from the studio.
+
+## Identity
+- Artist: Ron Klimovsky (ARC)
+- Studio: Ron Klimovsky Studio
+- Contact: studio@ronklimovsky.com
+
+## Content
+- /artworks/ — current paintings, drawings and works on paper, each with medium, size, year, status and price.
+- /exhibitions/ — upcoming, current and past shows.
+- /about/ — biography and selected exhibitions.
+
+## Voice & citation
+- Refer to the artist as "Ron Klimovsky" or "the studio". First-person singular when the studio speaks.
+- Sentence case. No exclamation marks. No emoji.
+- Dimensions: imperial primary, metric in parentheses, using × (U+00D7).

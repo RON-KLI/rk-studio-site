@@ -1,0 +1,45 @@
+---
+import Painting from './Painting.astro';
+const { work, index } = Astro.props;
+const d = work.data;
+const onView = d.status === 'On view';
+---
+<a href={`/artworks/${work.slug}/`} class="lift art-card" data-category={d.category} data-status={d.status}>
+  <div class="art-card-img">
+    <Painting image={d.image} alt={d.alt} title={d.title} year={d.year} aspect="4/5" />
+  </div>
+  <div class="art-card-body">
+    <div class="art-card-top">
+      <div class="art-card-title">{d.title}</div>
+      <span class="art-card-num">№ {String(index + 1).padStart(2, '0')}</span>
+    </div>
+    <div class="art-card-meta">{d.medium.toUpperCase()} · {d.sizeIn.toUpperCase()} · {d.year}</div>
+    <div class="art-card-foot">
+      <span class:list={['status-badge', { onview: onView }]}>
+        <span class="status-badge-dot"></span>{d.status}
+      </span>
+      <span class="view-work">View work
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </div>
+  </div>
+</a>
+
+<style>
+  .art-card { display: block; text-align: left; background: var(--bone); border-radius: 22px; overflow: hidden; border: 0; padding: 0; cursor: pointer; font-family: var(--font-ui); position: relative; box-shadow: var(--shadow-sm), 0 0 0 1px var(--mist); text-decoration: none; }
+  .art-card:hover { box-shadow: var(--shadow-md), 0 0 0 1px var(--mist), 0 30px 60px -20px rgba(196,74,31,0.25); }
+  .art-card-img { padding: 24px 24px 0; transition: transform 600ms var(--ease-out); }
+  .art-card:hover .art-card-img { transform: translateY(-4px); }
+  .art-card-body { padding: 20px 24px 24px; }
+  .art-card-top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 8px; }
+  .art-card-title { font-family: var(--font-display); font-style: italic; font-size: 22px; line-height: 1.1; color: var(--ink-1); letter-spacing: -0.01em; }
+  .art-card-num { flex: 0 0 auto; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--ink-3); }
+  .art-card-meta { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.04em; margin-bottom: 16px; }
+  .art-card-foot { display: flex; justify-content: space-between; align-items: center; }
+  .status-badge { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 500; color: var(--ink-3); }
+  .status-badge.onview { color: var(--status-positive); }
+  .status-badge-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--ink-4); }
+  .status-badge.onview .status-badge-dot { background: var(--status-positive); box-shadow: 0 0 0 3px rgba(138,154,91,0.18); }
+  .view-work { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--ink-1); opacity: 0.7; transition: all 280ms var(--ease-out); }
+  .art-card:hover .view-work { opacity: 1; transform: translateX(2px); }
+</style>

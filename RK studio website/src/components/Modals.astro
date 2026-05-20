@@ -1,0 +1,207 @@
+---
+import { siteConfig } from '../siteConfig';
+const key = siteConfig.web3formsKey || '';
+const email = siteConfig.email;
+---
+<!-- INQUIRE -->
+<div class="sheet-scrim" data-sheet="inquire" hidden>
+  <div class="sheet sheet-paper" role="dialog" aria-modal="true" aria-label="Inquire">
+    <button class="sheet-close press" data-close aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div data-form-view>
+      <div class="eyebrow-m">Inquire</div>
+      <h2 class="sheet-h" data-inquire-title>Write to the studio</h2>
+      <div class="work-chip" data-work-chip hidden>
+        <div class="work-chip-sw" data-work-sw></div>
+        <div class="work-chip-meta"><span class="work-chip-medium" data-work-medium></span><span class="work-chip-size" data-work-size></span></div>
+      </div>
+      <p class="sheet-p">Send a short note. The studio replies within a few days. There is no waiting list — only the work currently in the room.</p>
+      <form data-w3form data-kind="Inquiry">
+        <input type="hidden" name="_subject" value="New inquiry — Ron Klimovsky Studio" />
+        <input type="hidden" name="from_name" value="RK Studio website" />
+        <input type="hidden" name="artwork" data-work-field value="" />
+        <div class="field-grid">
+          <label class="field"><span class="lbl">Your name</span><input name="name" type="text" required /></label>
+          <label class="field"><span class="lbl">Email</span><input name="email" type="email" required /></label>
+          <label class="field span2"><span class="lbl">Note</span><textarea name="message" rows="4" required></textarea></label>
+        </div>
+        <div class="sheet-actions">
+          <button type="submit" class="btn-primary press"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> Send inquiry</button>
+          <button type="button" class="btn-text press" data-close>Cancel</button>
+          <span class="esc-hint">ESC TO CLOSE</span>
+        </div>
+      </form>
+    </div>
+    <div data-sent-view hidden>
+      <div class="sent-check"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--ink-1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+      <h2 class="sheet-h center">The studio has your note.</h2>
+      <p class="sheet-p center">I read replies in the order they arrive. You should hear back within a few days, often sooner.</p>
+      <div class="center"><button class="btn-primary press" data-close>Close</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNUP -->
+<div class="sheet-scrim" data-sheet="signup" hidden>
+  <div class="sheet lg-strong" role="dialog" aria-modal="true" aria-label="Sign up for updates">
+    <button class="sheet-close press" data-close aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div data-form-view>
+      <div class="eyebrow-m">Studio updates</div>
+      <h2 class="sheet-h">Hear from the studio, <em>quietly.</em></h2>
+      <p class="sheet-p">I send a note when something worth your time is done — and when I feel like it.</p>
+      <form data-w3form data-kind="Signup">
+        <input type="hidden" name="_subject" value="New mailing-list signup — Ron Klimovsky Studio" />
+        <input type="hidden" name="from_name" value="RK Studio website" />
+        <div class="field-grid">
+          <label class="field span2"><span class="lbl">Your name</span><input name="name" type="text" required /></label>
+          <label class="field"><span class="lbl">Email</span><input name="email" type="email" required /></label>
+          <label class="field"><span class="lbl">Phone</span><input name="phone" type="tel" /></label>
+        </div>
+        <div class="sheet-actions">
+          <button type="submit" class="btn-primary press"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> Sign me up</button>
+          <button type="button" class="btn-text press" data-close>Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div data-sent-view hidden>
+      <div class="sent-check"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--ink-1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+      <h2 class="sheet-h center">You're on the list.</h2>
+      <p class="sheet-p center">The next letter will arrive when there is something worth sending.</p>
+      <div class="center"><button class="btn-primary press" data-close>Close</button></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .sheet-scrim { position: fixed; inset: 0; background: rgba(26,20,16,0.25); backdrop-filter: saturate(180%) blur(28px); -webkit-backdrop-filter: saturate(180%) blur(28px); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; transition: opacity 320ms var(--ease-out); }
+  .sheet-scrim.open { opacity: 1; }
+  .sheet-scrim[hidden] { display: none; }
+  .sheet { position: relative; width: 100%; max-width: 580px; max-height: calc(100vh - 48px); overflow: auto; border-radius: 32px; padding: 36px; box-shadow: var(--shadow-xl); font-family: var(--font-ui); transform: scale(0.96) translateY(8px); opacity: 0; transition: all 420ms var(--ease-spring); }
+  .sheet-scrim.open .sheet { transform: scale(1) translateY(0); opacity: 1; }
+  .sheet-paper { background: var(--bone); border: 1px solid var(--mist); }
+  .sheet-close { position: absolute; top: 18px; right: 18px; width: 36px; height: 36px; border-radius: 999px; background: var(--paper-2); border: 0; color: var(--ink-2); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .eyebrow-m { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 10px; }
+  .sheet-h { font-family: var(--font-display); font-size: 34px; font-weight: 400; letter-spacing: -0.02em; margin: 0; color: var(--ink-1); }
+  .sheet-h em { font-style: italic; color: var(--ink-2); }
+  .sheet-h.center { text-align: center; font-size: 30px; margin: 0 0 12px; }
+  .sheet-p { font-size: 15px; color: var(--ink-2); line-height: 1.6; margin: 22px 0 28px; }
+  .sheet-p.center { text-align: center; max-width: 32ch; margin: 0 auto 28px; }
+  .work-chip { margin-top: 20px; display: inline-flex; align-items: center; gap: 12px; padding: 8px 16px 8px 8px; border-radius: 999px; background: var(--bone); box-shadow: inset 0 0 0 1px var(--mist); }
+  .work-chip-sw { width: 36px; height: 36px; border-radius: 12px; background: var(--accent-grad); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06); }
+  .work-chip-meta { display: flex; flex-direction: column; line-height: 1.15; }
+  .work-chip-medium { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+  .work-chip-size { font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--ink-1); }
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .field { display: block; }
+  .field.span2 { grid-column: span 2; }
+  .lbl { font-family: var(--font-mono); font-size: 9.5px; color: var(--ink-3); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+  .field input, .field textarea { width: 100%; box-sizing: border-box; padding: 12px 14px; background: var(--bone); border: 1px solid var(--mist); border-radius: 16px; font-size: 14px; color: var(--ink-1); outline: none; font-family: var(--font-ui); resize: vertical; }
+  .field input:focus, .field textarea:focus { border-color: var(--ink-4); }
+  .sheet-actions { display: flex; gap: 8px; margin-top: 24px; align-items: center; }
+  .btn-primary { padding: 13px 22px; border-radius: 999px; background: var(--ink-1); color: var(--bone); border: 0; font-size: 14px; font-weight: 500; font-family: var(--font-ui); display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+  .btn-text { padding: 13px 18px; border-radius: 999px; background: transparent; color: var(--ink-3); border: 0; font-size: 13px; font-weight: 500; cursor: pointer; font-family: var(--font-ui); }
+  .esc-hint { margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.06em; }
+  .sent-check { width: 64px; height: 64px; border-radius: 999px; background: var(--accent-grad-soft, var(--paper-2)); margin: 24px auto 22px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.6); }
+  .center { text-align: center; }
+  @media (max-width: 520px) { .sheet { padding: 28px 22px; } .field-grid { grid-template-columns: 1fr; } .field.span2 { grid-column: span 1; } .sheet-h { font-size: 28px; } }
+</style>
+
+<script define:vars={{ key, email }}>
+  let lastFocus = null;
+  function openSheet(name, ctx) {
+    const scrim = document.querySelector(`[data-sheet="${name}"]`);
+    if (!scrim) return;
+    lastFocus = document.activeElement;
+    // reset views
+    scrim.querySelector('[data-form-view]').hidden = false;
+    const sent = scrim.querySelector('[data-sent-view]');
+    if (sent) sent.hidden = true;
+    // artwork context (inquire only)
+    if (name === 'inquire') {
+      const chip = scrim.querySelector('[data-work-chip]');
+      const titleEl = scrim.querySelector('[data-inquire-title]');
+      const field = scrim.querySelector('[data-work-field]');
+      if (ctx && ctx.title) {
+        chip.hidden = false;
+        scrim.querySelector('[data-work-medium]').textContent = ctx.medium || 'Work';
+        scrim.querySelector('[data-work-size]').textContent = [ctx.size, ctx.year].filter(Boolean).join(' · ');
+        if (ctx.grad) scrim.querySelector('[data-work-sw]').style.background = ctx.grad;
+        titleEl.innerHTML = 'About <em style="font-style:italic;color:var(--ink-2)">' + ctx.title + '</em>';
+        if (field) field.value = ctx.title + (ctx.medium ? ' (' + ctx.medium + ')' : '');
+      } else {
+        chip.hidden = true;
+        titleEl.textContent = 'Write to the studio';
+        if (field) field.value = '';
+      }
+    }
+    scrim.hidden = false;
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => scrim.classList.add('open'));
+    const firstInput = scrim.querySelector('input, textarea');
+    if (firstInput) setTimeout(() => firstInput.focus(), 120);
+  }
+  function closeSheet(scrim) {
+    scrim.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { scrim.hidden = true; }, 320);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  // openers
+  document.addEventListener('click', (e) => {
+    const inq = e.target.closest('[data-open-inquire]');
+    if (inq) {
+      e.preventDefault();
+      const ctx = inq.dataset.workTitle ? { title: inq.dataset.workTitle, medium: inq.dataset.workMedium, size: inq.dataset.workSize, year: inq.dataset.workYear, grad: inq.dataset.workGrad } : null;
+      openSheet('inquire', ctx);
+      return;
+    }
+    if (e.target.closest('[data-open-signup]')) { e.preventDefault(); openSheet('signup'); return; }
+    const closer = e.target.closest('[data-close]');
+    if (closer) { const s = closer.closest('.sheet-scrim'); if (s) closeSheet(s); return; }
+  });
+  // backdrop click
+  document.querySelectorAll('.sheet-scrim').forEach((scrim) => {
+    scrim.addEventListener('click', (e) => { if (e.target === scrim) closeSheet(scrim); });
+  });
+  // esc
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { const open = document.querySelector('.sheet-scrim.open'); if (open) closeSheet(open); }
+  });
+  // form submit -> Web3Forms (or mailto fallback if no key set)
+  document.querySelectorAll('form[data-w3form]').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const scrim = form.closest('.sheet-scrim');
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const data = Object.fromEntries(new FormData(form).entries());
+      if (!key) {
+        // No Web3Forms key yet — open the user's email client as a graceful fallback.
+        const subj = encodeURIComponent(form.dataset.kind + ' — Ron Klimovsky Studio');
+        const body = encodeURIComponent(Object.entries(data).filter(([k]) => !k.startsWith('_') && k !== 'from_name').map(([k, v]) => k + ': ' + v).join('\n'));
+        window.location.href = `mailto:${email}?subject=${subj}&body=${body}`;
+        return;
+      }
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '0.6'; }
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ access_key: key, ...data }),
+        });
+        const out = await res.json();
+        if (out.success) {
+          form.closest('[data-form-view]').hidden = true;
+          scrim.querySelector('[data-sent-view]').hidden = false;
+          form.reset();
+        } else { alert('Something went wrong sending your message. Please email ' + email + ' directly.'); }
+      } catch (err) {
+        alert('Could not send right now. Please email ' + email + ' directly.');
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; }
+      }
+    });
+  });
+</script>

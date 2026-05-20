@@ -1,0 +1,51 @@
+---
+import { siteConfig } from '../siteConfig';
+---
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-name">Ron Klimovsky<br />Studio</div>
+        <p class="footer-blurb">I make things I want to exist and sell them to make more things I want to exist.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Studio</div>
+        <ul class="footer-list">
+          <li><a class="ulink" href="/">Home</a></li>
+          <li><a class="ulink" href="/artworks/">On view</a></li>
+          <li><a class="ulink" href="/exhibitions/">Exhibitions</a></li>
+          <li><a class="ulink" href="/about/">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-contact">
+          <div>{siteConfig.email}</div>
+          <div>{siteConfig.phone}</div>
+          <div style="margin-top:12px;color:var(--ink-3);">somewhere on earth</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-base">
+      <div>© {new Date().getFullYear()} RON KLIMOVSKY · ALL RIGHTS RESERVED</div>
+      <div>MADE QUIETLY, IN THE STUDIO</div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer { position: relative; margin-top: 96px; padding: 72px 32px 36px; background: var(--paper-2); border-top: 1px solid var(--mist); }
+  .footer-inner { max-width: 1280px; margin: 0 auto; }
+  .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 48px; align-items: flex-start; }
+  .footer-name { font-family: var(--font-display); font-style: italic; font-size: 44px; color: var(--ink-1); letter-spacing: -0.025em; line-height: 0.95; font-weight: 400; }
+  .footer-blurb { margin-top: 18px; font-size: 14.5px; color: var(--ink-2); line-height: 1.6; max-width: 36ch; }
+  .footer-col-title { font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 16px; }
+  .footer-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .footer-list a { font-family: var(--font-ui); font-size: 14px; color: var(--ink-2); }
+  .footer-contact { font-family: var(--font-mono); font-size: 12px; color: var(--ink-2); letter-spacing: 0.04em; line-height: 1.8; }
+  .footer-base { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--mist); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.08em; text-transform: uppercase; }
+  @media (max-width: 760px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+    .footer-name { font-size: 36px; }
+  }
+</style>

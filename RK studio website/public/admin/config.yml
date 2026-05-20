@@ -1,0 +1,96 @@
+# ============================================================================
+# Studio content editor (Sveltia CMS)
+#
+# ONE THING TO CHANGE before the editor works:
+#   Replace OWNER/REPO below with your GitHub username and repository name,
+#   e.g.  repo: ronklimovsky/rk-studio-site
+# (The deployment guide walks you through this step by step.)
+# ============================================================================
+backend:
+  name: github
+  repo: OWNER/REPO        # <-- change this, e.g. ronklimovsky/rk-studio-site
+  branch: main
+
+# Where uploaded photos are stored, and how the site refers to them.
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+# Friendlier publish wording for a non-technical editor.
+publish_mode: simple
+
+collections:
+  # --------------------------------------------------------------------------
+  - name: artworks
+    label: "Artworks"
+    label_singular: "Artwork"
+    folder: "src/content/artworks"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} · {{year}} · {{status}}"
+    sortable_fields: [order, year, title]
+    fields:
+      - { name: title, label: "Title", widget: string }
+      - { name: image, label: "Photo of the work", widget: image, required: false, hint: "Upload a high-quality photo. Until you do, a soft placeholder is shown." }
+      - { name: alt, label: "Photo description (for accessibility & SEO)", widget: string, required: false }
+      - { name: series, label: "Series", widget: string, default: "Works", hint: "e.g. Rooms at dawn, Interiors, Drawings" }
+      - name: category
+        label: "Category"
+        widget: select
+        default: "Painting"
+        options: ["Painting", "Drawing", "Sculpture", "Installation", "Edition", "Print", "Photograph", "Mixed media"]
+        hint: "Drives the filter buttons on the Artworks page."
+      - { name: year, label: "Year", widget: number, value_type: int, default: 2026 }
+      - { name: medium, label: "Medium", widget: string, hint: "e.g. Oil on linen" }
+      - { name: sizeIn, label: "Size — inches", widget: string, required: false, hint: 'e.g. 48 × 36 in.' }
+      - { name: sizeCm, label: "Size — centimetres", widget: string, required: false, hint: 'e.g. (122 × 91 cm)' }
+      - name: status
+        label: "Status"
+        widget: select
+        default: "Available"
+        options: ["On view", "Available", "Sold", "Private collection", "Reserved"]
+      - { name: edition, label: "Edition (optional)", widget: string, required: false, hint: 'e.g. Edition of 30 — leave blank for originals' }
+      - { name: price, label: "Price", widget: string, default: "Inquire", hint: 'A price, or "Inquire", or "—"' }
+      - { name: featured, label: "Feature on the home page?", widget: boolean, default: false }
+      - { name: order, label: "Sort order (lower shows first)", widget: number, value_type: int, default: 10 }
+      - { name: body, label: "Studio note", widget: markdown, required: false, hint: "A short, personal note shown on the work's page." }
+
+  # --------------------------------------------------------------------------
+  - name: exhibitions
+    label: "Exhibitions"
+    label_singular: "Exhibition"
+    folder: "src/content/exhibitions"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} · {{venue}}"
+    sortable_fields: [startDate, title]
+    fields:
+      - { name: title, label: "Title", widget: string }
+      - { name: venue, label: "Venue", widget: string }
+      - { name: city, label: "City", widget: string }
+      - { name: startDate, label: "Start date", widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true }
+      - { name: endDate, label: "End date", widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, hint: "On view / Upcoming / Past is worked out automatically from these dates." }
+      - { name: featured, label: "Feature at the top of the page?", widget: boolean, default: false }
+      - { name: rsvp, label: "Show an RSVP button?", widget: boolean, default: true }
+      - { name: image, label: "Image (optional)", widget: image, required: false }
+      - { name: alt, label: "Image description", widget: string, required: false }
+      - { name: body, label: "Description", widget: markdown, required: false }
+
+  # --------------------------------------------------------------------------
+  - name: site
+    label: "Site text"
+    files:
+      - name: home
+        label: "Home page"
+        file: "src/content/site/home.md"
+        fields:
+          - { name: heroTitle, label: "Big headline", widget: string }
+          - { name: heroSubtitle, label: "Sub-headline", widget: text }
+          - { name: body, label: "(unused)", widget: markdown, required: false }
+      - name: about
+        label: "About page"
+        file: "src/content/site/about.md"
+        fields:
+          - { name: lede, label: "Opening line (large)", widget: text }
+          - { name: portrait, label: "Portrait photo", widget: image, required: false }
+          - { name: portraitAlt, label: "Portrait description", widget: string, required: false }
+          - { name: body, label: "Biography", widget: markdown }

@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro';
+import { getEntry } from 'astro:content';
+import { getExhibitions, displayDates } from '../lib/content';
+import { siteConfig } from '../siteConfig';
+
+const about = await getEntry('site', 'about');
+const { Content } = await about.render();
+const lede = about?.data.lede || '';
+const portrait = about?.data.portrait || '/uploads/studio-portrait.jpg';
+const portraitAlt = about?.data.portraitAlt || 'Ron Klimovsky in the studio';
+const exhibitions = (await getExhibitions()).slice(0, 6);
+---
+<Base current="about" title="About — Ron Klimovsky Studio" description="Ron Klimovsky (ARC) — biography and selected exhibitions.">
+  <section class="about">
+    <div class="eyebrow">About</div>
+    <h1 class="about-h1">I create art.</h1>
+
+    <div class="about-grid">
+      <div class="about-portrait-wrap">
+        <div class="portrait-plate">
+          <img src={portrait} alt={portraitAlt} />
+          <div class="lg portrait-caption"><span class="pc-dot"></span><span class="pc-label">Portrait, {new Date().getFullYear()}</span></div>
+        </div>
+        <div class="about-contact">
+          <div>RON KLIMOVSKY</div>
+          <div style="margin-top:12px;">{siteConfig.email.toUpperCase()}</div>
+        </div>
+      </div>
+
+      <div class="about-bio">
+        {lede && <p class="about-lede">{lede}</p>}
+        <div class="about-body"><Content /></div>
+
+        <div class="cv">
+          <div class="eyebrow" style="margin-bottom:20px;">Selected exhibitions</div>
+          <ul class="cv-list">
+            {exhibitions.map((x, i) => (
+              <li class="cv-item" style={i === 0 ? 'border-top:1px solid var(--mist);' : ''}>
+                <span class="cv-year">{x.data.startDate.getFullYear()}</span>
+                <span class="cv-title">{x.data.title}</span>
+                <span class="cv-venue">{x.data.venue}, {x.data.city}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="about-actions">
+          <button type="button" class="btn-primary press" data-open-inquire>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            Write to the studio
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about { position: relative; padding: 64px 32px 144px; max-width: 1280px; margin: 0 auto; }
+  .eyebrow { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.18em; text-transform: uppercase; }
+  .about-h1 { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(40px, 5vw, 76px); line-height: 1.0; letter-spacing: -0.03em; margin: 12px 0 56px; font-weight: 400; color: var(--ink-1); }
+  .about-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 80px; align-items: flex-start; }
+  .about-portrait-wrap { position: sticky; top: 100px; }
+  .portrait-plate { position: relative; width: 100%; max-width: 420px; }
+  .portrait-plate > img { display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: center top; border-radius: 22px; background: var(--paper-2); box-shadow: var(--shadow-md); }
+  .portrait-caption { position: absolute; left: 16px; bottom: -22px; padding: 10px 14px 10px 12px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px; font-size: 12px; }
+  .pc-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--accent-3, var(--sunrise)); box-shadow: 0 0 6px rgba(255,123,60,0.5); }
+  .pc-label { font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--ink-1); }
+  .about-contact { margin-top: 40px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.06em; line-height: 1.6; }
+  .about-bio { max-width: 620px; }
+  .about-lede { font-family: var(--font-display); font-size: 26px; line-height: 1.4; letter-spacing: -0.012em; color: var(--ink-1); margin: 0 0 28px; }
+  .about-body { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 36px; }
+  .about-body :global(p) { font-size: 16px; color: var(--ink-2); line-height: 1.65; margin: 0; }
+  .cv { margin-top: 64px; }
+  .cv-list { list-style: none; padding: 0; margin: 0; }
+  .cv-item { display: grid; grid-template-columns: 60px 1fr auto; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--mist); gap: 16px; }
+  .cv-year { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); }
+  .cv-title { font-family: var(--font-display); font-style: italic; font-size: 18px; color: var(--ink-1); letter-spacing: -0.005em; }
+  .cv-venue { font-family: var(--font-ui); font-size: 13px; color: var(--ink-3); }
+  .about-actions { margin-top: 56px; display: flex; gap: 10px; }
+  .btn-primary { padding: 13px 22px; border-radius: 999px; background: var(--ink-1); color: var(--bone); border: 0; font-size: 14px; font-weight: 500; font-family: var(--font-ui); display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+  @media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; gap: 56px; } .about-portrait-wrap { position: static; } }
+  @media (max-width: 560px) { .about { padding: 40px 18px 96px; } .about-body { grid-template-columns: 1fr; } .cv-item { grid-template-columns: 48px 1fr; } .cv-venue { grid-column: 2; } }
+</style>

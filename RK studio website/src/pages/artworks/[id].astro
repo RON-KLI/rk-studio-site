@@ -1,0 +1,113 @@
+---
+import Base from '../../layouts/Base.astro';
+import Painting from '../../components/Painting.astro';
+import { getArtworks } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const artworks = await getArtworks();
+  return artworks.map((work) => ({
+    params: { id: work.slug },
+    props: { work, all: artworks },
+  }));
+}
+const { work, all } = Astro.props;
+const d = work.data;
+const { Content } = await work.render();
+const onView = d.status === 'On view';
+const related = all.filter((w) => w.id !== work.id && w.data.series === d.series).slice(0, 4);
+---
+<Base current="artworks" title={`${d.title} — Ron Klimovsky Studio`} description={`${d.title} (${d.year}) — ${d.medium}. ${d.status}.`} image={d.image || '/assets/logo.png'}>
+  <section class="detail">
+    <div aria-hidden="true" class="detail-wash"></div>
+
+    <div class="detail-back">
+      <a href="/artworks/" class="ulink back-link">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(180deg)"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        On view
+      </a>
+    </div>
+
+    <div class="detail-hero">
+      <div class="detail-painting">
+        <div aria-hidden="true" class="detail-painting-glow"></div>
+        <Painting image={d.image} alt={d.alt} title={d.title} year={d.year} aspect="4/5" />
+      </div>
+      <div class="detail-meta">
+        <div class="eyebrow">{d.series} · {d.year}</div>
+        <h1 class="detail-h1">{d.title}</h1>
+        <div class="lg specs">
+          <div class="spec"><div class="spec-l">Medium</div><div class="spec-v">{d.medium}</div></div>
+          <div class="spec"><div class="spec-l">Year</div><div class="spec-v">{d.year}</div></div>
+          <div class="spec"><div class="spec-l">Size</div><div class="spec-v">{d.sizeIn}</div>{d.sizeCm && <div class="spec-sub">{d.sizeCm}</div>}</div>
+          <div class="spec"><div class="spec-l">Status</div><div class:list={['spec-v', { accent: onView }]}>{onView && <span class="spec-dot"></span>}{d.status}</div></div>
+          {d.edition && <div class="spec"><div class="spec-l">Edition</div><div class="spec-v">{d.edition}</div></div>}
+          <div class="spec"><div class="spec-l">Price</div><div class="spec-v">{d.price}</div></div>
+        </div>
+        <div class="studio-note"><Content /></div>
+        <div class="detail-actions">
+          <button type="button" class="btn-primary press" data-open-inquire
+            data-work-title={d.title} data-work-medium={d.medium} data-work-size={d.sizeIn} data-work-year={String(d.year)}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            Inquire about this work
+          </button>
+        </div>
+      </div>
+    </div>
+
+    {related.length > 0 && (
+      <div class="related">
+        <div class="eyebrow">Also from {d.series}</div>
+        <h2 class="related-h2">The rest of the room</h2>
+        <div class="related-grid">
+          {related.map((r) => (
+            <a href={`/artworks/${r.slug}/`} class="lift related-card">
+              <Painting image={r.data.image} alt={r.data.alt} title={r.data.title} year={r.data.year} aspect="4/5" />
+              <div class="related-body">
+                <div class="related-title">{r.data.title}</div>
+                <div class="related-meta">{r.data.medium.toUpperCase()} · {r.data.year}</div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+  </section>
+
+  <button type="button" class="lg-strong press float-inquire" data-open-inquire
+    data-work-title={d.title} data-work-medium={d.medium} data-work-size={d.sizeIn} data-work-year={String(d.year)}>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+    Inquire
+  </button>
+</Base>
+
+<style>
+  .detail { position: relative; padding-bottom: 140px; }
+  .detail-wash { position: absolute; top: 0; left: 0; right: 0; height: 720px; background: radial-gradient(ellipse 80% 60% at 50% 0%, var(--bone) 0%, var(--paper-2) 40%, transparent 80%); pointer-events: none; z-index: 0; }
+  .detail-back { position: relative; z-index: 1; padding: 32px 32px 0; max-width: 1280px; margin: 0 auto; }
+  .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 8px 0; color: var(--ink-2); font-family: var(--font-ui); font-size: 13px; }
+  .detail-hero { position: relative; z-index: 1; padding: 32px 32px 80px; max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 80px; align-items: center; }
+  .detail-painting { position: relative; }
+  .detail-painting-glow { position: absolute; inset: -8%; background: radial-gradient(circle at 60% 50%, var(--bone) 0%, var(--paper-2) 40%, transparent 70%); filter: blur(60px); opacity: 0.9; z-index: -1; }
+  .eyebrow { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 12px; }
+  .detail-h1 { font-family: var(--font-display); font-style: italic; font-size: clamp(36px, 4.5vw, 64px); line-height: 1.02; letter-spacing: -0.025em; margin: 0; font-weight: 400; color: var(--ink-1); }
+  .specs { margin-top: 36px; padding: 20px 24px; border-radius: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .spec-l { font-family: var(--font-mono); font-size: 9.5px; color: var(--ink-3); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
+  .spec-v { font-family: var(--font-ui); font-size: 15px; font-weight: 500; color: var(--ink-1); display: inline-flex; align-items: center; gap: 6px; }
+  .spec-v.accent { color: var(--status-positive); }
+  .spec-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--status-positive); box-shadow: 0 0 0 3px rgba(138,154,91,0.18); }
+  .spec-sub { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.02em; margin-top: 2px; }
+  .studio-note { margin-top: 28px; font-family: var(--font-display); font-style: italic; font-size: 22px; color: var(--ink-2); line-height: 1.45; max-width: 38ch; }
+  .studio-note :global(p) { margin: 0 0 12px; }
+  .detail-actions { display: flex; gap: 10px; margin-top: 36px; flex-wrap: wrap; }
+  .btn-primary { padding: 13px 22px; border-radius: 999px; background: var(--ink-1); color: var(--bone); border: 0; font-size: 14px; font-weight: 500; font-family: var(--font-ui); display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+  .related { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  .related-h2 { font-family: var(--font-display); font-size: 32px; font-weight: 400; margin: 6px 0 20px; letter-spacing: -0.02em; }
+  .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+  .related-card { display: block; text-align: left; background: var(--bone); border-radius: 18px; overflow: hidden; border: 0; padding: 16px; cursor: pointer; box-shadow: var(--shadow-sm), 0 0 0 1px var(--mist); text-decoration: none; }
+  .related-body { padding: 14px 4px 2px; }
+  .related-title { font-family: var(--font-display); font-style: italic; font-size: 17px; color: var(--ink-1); line-height: 1.15; }
+  .related-meta { font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.06em; margin-top: 6px; }
+  .float-inquire { position: fixed; right: 28px; bottom: 28px; padding: 14px 22px 14px 18px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px; background: var(--ink-1); color: var(--bone); border: 0; font-family: var(--font-ui); font-size: 14px; font-weight: 500; z-index: 60; box-shadow: var(--shadow-lg); cursor: pointer; }
+  @media (max-width: 860px) { .detail-hero { grid-template-columns: 1fr; gap: 40px; } }
+  @media (max-width: 520px) { .detail-hero { padding: 24px 18px 60px; } .detail-back { padding: 24px 18px 0; } .related { padding: 0 18px; } .float-inquire { right: 16px; bottom: 16px; } }
+</style>

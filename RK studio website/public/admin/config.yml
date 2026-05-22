@@ -8,7 +8,7 @@
 # ============================================================================
 backend:
   name: github
-  repo: OWNER/REPO        # <-- change this, e.g. ronklimovsky/rk-studio-site
+  repo: RON-KLI/rk-studio-site
   branch: main
 
 # Where uploaded photos are stored, and how the site refers to them.
@@ -52,6 +52,17 @@ collections:
       - { name: price, label: "Price", widget: string, default: "Inquire", hint: 'A price, or "Inquire", or "—"' }
       - { name: featured, label: "Feature on the home page?", widget: boolean, default: false }
       - { name: order, label: "Sort order (lower shows first)", widget: number, value_type: int, default: 10 }
+      - name: gallery
+        label: "Extra photos (optional)"
+        label_singular: "Photo"
+        widget: list
+        required: false
+        summary: "{{fields.label}}"
+        hint: "Add detail or process shots. When a work has more than one photo, its page shows a swipeable carousel (the main photo above is always first)."
+        fields:
+          - { name: image, label: "Photo", widget: image }
+          - { name: label, label: "Short tab label", widget: string, required: false, hint: 'e.g. Detail, Day 8, In the studio' }
+          - { name: caption, label: "Caption", widget: string, required: false, hint: 'Shown over the photo, e.g. "Upper-right quadrant"' }
       - { name: body, label: "Studio note", widget: markdown, required: false, hint: "A short, personal note shown on the work's page." }
 
   # --------------------------------------------------------------------------
@@ -74,6 +85,44 @@ collections:
       - { name: image, label: "Image (optional)", widget: image, required: false }
       - { name: alt, label: "Image description", widget: string, required: false }
       - { name: body, label: "Description", widget: markdown, required: false }
+
+  # --------------------------------------------------------------------------
+  - name: worlds
+    label: "Worlds"
+    label_singular: "World"
+    folder: "src/content/worlds"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} · {{count}} works"
+    sortable_fields: [order, title]
+    fields:
+      - { name: title, label: "Title", widget: string, hint: "e.g. Rooms at dawn" }
+      - { name: blurb, label: "Short description", widget: text, required: false }
+      - { name: years, label: "Years", widget: string, required: false, hint: 'e.g. 2024 — present, or Ongoing' }
+      - { name: count, label: "Number of works", widget: number, value_type: int, default: 0, hint: "Shown on the tile, e.g. 9 works." }
+      - { name: colorLight, label: "Tile colour — light", widget: color, default: "#FFE2C9", enableAlpha: false, allowInput: true }
+      - { name: colorMid, label: "Tile colour — middle", widget: color, default: "#FF9A75", enableAlpha: false, allowInput: true }
+      - { name: colorDeep, label: "Tile colour — deep", widget: color, default: "#C44A1F", enableAlpha: false, allowInput: true }
+      - { name: order, label: "Sort order (lower shows first)", widget: number, value_type: int, default: 10 }
+
+  # --------------------------------------------------------------------------
+  - name: editions
+    label: "Editions & prints"
+    label_singular: "Edition"
+    folder: "src/content/editions"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} · {{editionLabel}}"
+    sortable_fields: [order, title]
+    fields:
+      - { name: title, label: "Title", widget: string }
+      - { name: editionLabel, label: "Edition", widget: string, required: false, hint: 'e.g. Edition of 30' }
+      - { name: size, label: "Size", widget: string, required: false, hint: 'e.g. 12 × 16 in.' }
+      - { name: price, label: "Price", widget: string, default: "Inquire" }
+      - { name: colorLight, label: "Tile colour — light", widget: color, default: "#FFD4B8", enableAlpha: false, allowInput: true }
+      - { name: colorMid, label: "Tile colour — middle", widget: color, default: "#FF7A3D", enableAlpha: false, allowInput: true }
+      - { name: colorDeep, label: "Tile colour — deep", widget: color, default: "#5A1A0A", enableAlpha: false, allowInput: true }
+      - { name: order, label: "Sort order (lower shows first)", widget: number, value_type: int, default: 10 }
 
   # --------------------------------------------------------------------------
   - name: site

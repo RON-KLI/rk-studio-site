@@ -170,9 +170,12 @@ body[data-density="editorial"] {
 }
 .lift:hover { transform: translateY(-3px); }
 
-/* squircle clip — iOS app-icon look */
+/* squircle — iOS app-icon look. Uses a scalable percentage radius (the old
+   fixed-pixel clip-path didn't scale and clipped large tiles). Each tile also
+   sets its own border-radius, which takes precedence. */
 .squircle {
-  clip-path: path("M 0,40 C 0,12 12,0 40,0 L 60,0 C 88,0 100,12 100,40 L 100,60 C 100,88 88,100 60,100 L 40,100 C 12,100 0,88 0,60 Z");
+  border-radius: 22%;
+  overflow: hidden;
 }
 
 /* specular sheen used on app-icon tiles */

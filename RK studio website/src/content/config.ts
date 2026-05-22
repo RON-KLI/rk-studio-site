@@ -17,8 +17,47 @@ const artworks = defineCollection({
     price: z.string().default('Inquire'),
     image: z.string().optional(),     // /uploads/your-photo.jpg (uploaded via CMS)
     alt: z.string().default(''),
+    // Optional extra photos (process shots, details). When present, the work's
+    // page shows a carousel; the main `image` is always the first slide.
+    gallery: z.array(z.object({
+      image: z.string(),
+      label: z.string().default(''),    // short tab label, e.g. "Detail" / "Day 8"
+      caption: z.string().default(''),  // line shown over the photo
+    })).default([]),
     featured: z.boolean().default(false),
     order: z.number().default(0),     // lower = earlier in the grid
+  }),
+});
+
+// Worlds — bodies of work (themed series). Shown as app-icon "squircle" tiles.
+// The two/three colours compose the tile gradient; `count` is a curated total
+// (not auto-derived) so it can include works that aren't online.
+const worlds = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    blurb: z.string().default(''),
+    years: z.string().default(''),      // e.g. "2024 — present"
+    count: z.number().default(0),       // e.g. 9 works
+    colorLight: z.string().default('#FFE2C9'),
+    colorMid: z.string().default('#FF9A75'),
+    colorDeep: z.string().default('#C44A1F'),
+    order: z.number().default(0),
+  }),
+});
+
+// Editions — limited prints, shown as smaller app-icon tiles on the Worlds page.
+const editions = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    editionLabel: z.string().default(''), // e.g. "Edition of 30"
+    size: z.string().default(''),         // e.g. "12 × 16 in."
+    price: z.string().default('Inquire'),
+    colorLight: z.string().default('#FFD4B8'),
+    colorMid: z.string().default('#FF7A3D'),
+    colorDeep: z.string().default('#5A1A0A'),
+    order: z.number().default(0),
   }),
 });
 
@@ -50,4 +89,4 @@ const site = defineCollection({
   }).passthrough(),
 });
 
-export const collections = { artworks, exhibitions, site };
+export const collections = { artworks, exhibitions, worlds, editions, site };

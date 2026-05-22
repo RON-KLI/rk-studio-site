@@ -15,6 +15,13 @@ const d = work.data;
 const { Content } = await work.render();
 const onView = d.status === 'On view';
 const related = all.filter((w) => w.id !== work.id && w.data.series === d.series).slice(0, 4);
+
+// Carousel slides: the main photo first, then any extra process/detail photos.
+// Only shows carousel chrome when there are at least two real photos.
+const slides = [] as { image: string; label: string; caption: string }[];
+if (d.image) slides.push({ image: d.image, label: 'Final', caption: '' });
+for (const g of (d.gallery || [])) slides.push({ image: g.image, label: g.label || '', caption: g.caption || '' });
+const hasCarousel = slides.length >= 2;
 ---
 <Base current="artworks" title={`${d.title} — Ron Klimovsky Studio`} description={`${d.title} (${d.year}) — ${d.medium}. ${d.status}.`} image={d.image || '/assets/logo.png'}>
   <section class="detail">
@@ -30,7 +37,38 @@ const related = all.filter((w) => w.id !== work.id && w.data.series === d.series
     <div class="detail-hero">
       <div class="detail-painting">
         <div aria-hidden="true" class="detail-painting-glow"></div>
-        <Painting image={d.image} alt={d.alt} title={d.title} year={d.year} aspect="4/5" />
+        {hasCarousel ? (
+          <div class="carousel" data-carousel>
+            <div class="carousel-stage">
+              {slides.map((s, i) => (
+                <div class="carousel-slide" data-slide data-index={i} aria-hidden={i !== 0 ? 'true' : 'false'}>
+                  <Painting image={s.image} alt={s.caption || d.alt} title={d.title} year={d.year} aspect="4/5" />
+                </div>
+              ))}
+              <div class="lg carousel-caption">
+                <span class="carousel-count" data-count>1 / {slides.length}</span>
+                <span class="carousel-div"></span>
+                <span class="carousel-cap-text" data-caption>{slides[0].caption || slides[0].label}</span>
+              </div>
+              <button type="button" class="lg press carousel-arrow carousel-prev" data-prev aria-label="Previous photo">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(180deg)"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+              <button type="button" class="lg press carousel-arrow carousel-next" data-next aria-label="Next photo">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+            <div class="carousel-thumbs">
+              {slides.map((s, i) => (
+                <button type="button" class:list={['carousel-thumb', { active: i === 0 }]} data-thumb data-index={i} aria-label={`Photo ${i + 1}`}>
+                  <span class="carousel-thumb-img"><Painting image={s.image} alt="" title={d.title} year={d.year} aspect="4/5" frame={false} /></span>
+                  <span class="carousel-thumb-label">{s.label || `№ ${i + 1}`}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <Painting image={d.image} alt={d.alt} title={d.title} year={d.year} aspect="4/5" />
+        )}
       </div>
       <div class="detail-meta">
         <div class="eyebrow">{d.series} · {d.year}</div>
@@ -110,4 +148,56 @@ const related = all.filter((w) => w.id !== work.id && w.data.series === d.series
   .float-inquire { position: fixed; right: 28px; bottom: 28px; padding: 14px 22px 14px 18px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px; background: var(--ink-1); color: var(--bone); border: 0; font-family: var(--font-ui); font-size: 14px; font-weight: 500; z-index: 60; box-shadow: var(--shadow-lg); cursor: pointer; }
   @media (max-width: 860px) { .detail-hero { grid-template-columns: 1fr; gap: 40px; } }
   @media (max-width: 520px) { .detail-hero { padding: 24px 18px 60px; } .detail-back { padding: 24px 18px 0; } .related { padding: 0 18px; } .float-inquire { right: 16px; bottom: 16px; } }
+
+  /* Carousel (shown when a work has more than one photo) */
+  .carousel-stage { position: relative; aspect-ratio: 4/5; }
+  .carousel-slide { position: absolute; inset: 0; opacity: 0; transform: scale(1.015); transition: opacity 520ms var(--ease-out), transform 700ms var(--ease-out); pointer-events: none; }
+  .carousel-slide[aria-hidden='false'] { opacity: 1; transform: scale(1); pointer-events: auto; }
+  .carousel-caption { position: absolute; left: 14px; bottom: 14px; padding: 8px 14px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-ui); font-size: 12px; color: var(--ink-1); z-index: 3; }
+  .carousel-count { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
+  .carousel-div { width: 1px; height: 12px; background: var(--mist); }
+  .carousel-cap-text { font-family: var(--font-display); font-style: italic; font-size: 14px; }
+  .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 999px; border: 0; cursor: pointer; display: grid; place-items: center; color: var(--ink-1); z-index: 3; }
+  .carousel-prev { left: 14px; } .carousel-next { right: 14px; }
+  .carousel-thumbs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 10px; margin-top: 14px; }
+  .carousel-thumb { background: transparent; border: 0; padding: 0; cursor: pointer; text-align: center; }
+  .carousel-thumb-img { display: block; border-radius: 8px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06); opacity: 0.78; transition: opacity 220ms ease, box-shadow 220ms ease; }
+  .carousel-thumb.active .carousel-thumb-img { opacity: 1; box-shadow: 0 0 0 2px var(--sunrise), inset 0 0 0 1px rgba(0,0,0,0.04); }
+  .carousel-thumb-label { display: block; font-family: var(--font-mono); font-size: 9.5px; color: var(--ink-3); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 8px; }
+  .carousel-thumb.active .carousel-thumb-label { color: var(--ink-1); }
 </style>
+
+<script>
+  document.querySelectorAll('[data-carousel]').forEach((root) => {
+    const slides = Array.from(root.querySelectorAll('[data-slide]')) as HTMLElement[];
+    const thumbs = Array.from(root.querySelectorAll('[data-thumb]')) as HTMLElement[];
+    const countEl = root.querySelector('[data-count]');
+    const capEl = root.querySelector('[data-caption]');
+    const captions = slides.map((s, i) => thumbs[i]?.querySelector('.carousel-thumb-label')?.textContent || '');
+    let idx = 0;
+    const n = slides.length;
+    const show = (next: number) => {
+      idx = (next % n + n) % n;
+      slides.forEach((s, i) => s.setAttribute('aria-hidden', i === idx ? 'false' : 'true'));
+      thumbs.forEach((t, i) => t.classList.toggle('active', i === idx));
+      if (countEl) countEl.textContent = `${idx + 1} / ${n}`;
+      if (capEl) capEl.textContent = captions[idx] || '';
+    };
+    root.querySelector('[data-prev]')?.addEventListener('click', () => show(idx - 1));
+    root.querySelector('[data-next]')?.addEventListener('click', () => show(idx + 1));
+    thumbs.forEach((t, i) => t.addEventListener('click', () => show(i)));
+    root.addEventListener('keydown', (e) => {
+      if ((e as KeyboardEvent).key === 'ArrowLeft') show(idx - 1);
+      if ((e as KeyboardEvent).key === 'ArrowRight') show(idx + 1);
+    });
+    let startX: number | null = null;
+    const stage = root.querySelector('.carousel-stage');
+    stage?.addEventListener('touchstart', (e) => { startX = (e as TouchEvent).touches[0].clientX; }, { passive: true });
+    stage?.addEventListener('touchend', (e) => {
+      if (startX == null) return;
+      const dx = (e as TouchEvent).changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) show(dx < 0 ? idx + 1 : idx - 1);
+      startX = null;
+    }, { passive: true });
+  });
+</script>

@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import WorldTile from '../components/WorldTile.astro';
+import EditionTile from '../components/EditionTile.astro';
+import { getWorlds, getEditions } from '../lib/content';
+
+const worlds = await getWorlds();
+const editions = await getEditions();
+---
+<Base current="worlds" title="Worlds — Ron Klimovsky Studio" description="Bodies of work and limited editions from the studio of Ron Klimovsky — themed series explored across paintings, drawings and prints.">
+  <section class="worlds page-enter">
+    <header class="worlds-head">
+      <h1 class="worlds-h1">Explore <em>WORLDS</em></h1>
+      <p class="worlds-lede">Worlds are artistic themes applied to various mediums in a coherent form.</p>
+    </header>
+
+    <div class="worlds-grid">
+      {worlds.map((w) => <WorldTile world={w} />)}
+    </div>
+
+    {editions.length > 0 && (
+      <div class="editions">
+        <div class="editions-head">
+          <div>
+            <div class="eyebrow">Editions &amp; prints</div>
+            <h2 class="editions-h2">Hand-pulled, numbered, never re-issued</h2>
+          </div>
+          <p class="editions-note">{editions.length} editions currently in the room. Each comes signed, numbered, and packed flat.</p>
+        </div>
+        <div class="editions-grid">
+          {editions.map((e) => <EditionTile edition={e} />)}
+        </div>
+      </div>
+    )}
+  </section>
+</Base>
+
+<style>
+  .worlds { position: relative; padding: 64px 32px 144px; max-width: 1280px; margin: 0 auto; }
+  .worlds-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-wrap: wrap; margin-bottom: 64px; }
+  .worlds-h1 { font-family: var(--font-display); font-size: clamp(40px, 5vw, 76px); line-height: 1.0; letter-spacing: -0.03em; margin: 0; font-weight: 400; max-width: 18ch; }
+  .worlds-h1 em { font-style: italic; color: var(--ink-2); }
+  .worlds-lede { font-size: 16px; color: var(--ink-3); max-width: 32ch; margin: 0; line-height: 1.55; }
+  .worlds-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; margin-bottom: 96px; }
+
+  .editions { margin-top: 32px; }
+  .editions-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; gap: 24px; flex-wrap: wrap; }
+  .eyebrow { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.18em; text-transform: uppercase; }
+  .editions-h2 { font-family: var(--font-display); font-size: 36px; font-weight: 400; letter-spacing: -0.02em; margin: 6px 0 0; }
+  .editions-note { font-size: 14px; color: var(--ink-3); max-width: 28ch; margin: 0; line-height: 1.55; }
+  .editions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 22px; }
+
+  @media (max-width: 520px) {
+    .worlds { padding: 40px 18px 96px; }
+    .worlds-grid { grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 64px; }
+    .editions-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .world-blurb { font-size: 13px; }
+  }
+</style>

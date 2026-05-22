@@ -6,7 +6,7 @@ export const GET: APIRoute = async () => {
   const base = siteConfig.domain.replace(/\/$/, '');
   const artworks = await getArtworks();
   const urls = [
-    '/', '/artworks/', '/exhibitions/', '/about/',
+    '/', '/artworks/', '/worlds/', '/exhibitions/', '/about/',
     ...artworks.map((w) => `/artworks/${w.slug}/`),
   ];
   const body = `<?xml version="1.0" encoding="UTF-8"?>

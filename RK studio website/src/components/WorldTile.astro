@@ -1,0 +1,50 @@
+---
+// WorldTile — an iOS-style "app icon" squircle for a body of work, rendered as
+// a photo-library stack: two soft tiles fan out behind the main one.
+import { lighten } from '../lib/content';
+
+const { world, href = '/artworks/' } = Astro.props;
+const d = world.data;
+
+const front = `linear-gradient(155deg, ${d.colorLight} 0%, ${d.colorMid} 45%, ${d.colorDeep} 100%)`;
+const back1 = `linear-gradient(150deg, ${lighten(d.colorLight, 0.25)} 0%, ${lighten(d.colorMid, 0.35)} 100%)`;
+const back2 = `linear-gradient(165deg, ${lighten(d.colorLight, 0.4)} 0%, ${lighten(d.colorMid, 0.5)} 100%)`;
+---
+<a href={href} class="world-tile press" aria-label={`${d.title} — ${d.count} works`}>
+  <div class="world-stack">
+    <div class="squircle world-back2" style={`background:${back2};`}></div>
+    <div class="squircle world-back1" style={`background:${back1};`}></div>
+    <div class="squircle specular world-front" style={`background:${front};`}>
+      <div class="world-sheen" aria-hidden="true"></div>
+      <div class="lg-strong world-count">{d.count} works</div>
+      <div class="world-overlay">
+        <div class="world-title">{d.title}</div>
+        <div class="world-years">{d.years}</div>
+      </div>
+    </div>
+  </div>
+  <p class="world-blurb">{d.blurb}</p>
+</a>
+
+<style>
+  .world-tile { display: block; text-align: left; text-decoration: none; cursor: pointer; font-family: var(--font-ui); }
+  .world-stack { position: relative; width: 100%; aspect-ratio: 1/1; padding: 6% 8% 4%; box-sizing: border-box; }
+  .world-back2, .world-back1, .world-front { position: absolute; transition: transform 400ms var(--ease-spring), box-shadow 380ms var(--ease-spring); }
+  .world-back2 { left: 12%; right: 12%; top: 10%; bottom: 8%; border-radius: 38px; transform: rotate(-8deg); transform-origin: 50% 100%; opacity: 0.95;
+    box-shadow: 0 8px 20px -10px rgba(26,20,16,0.25), inset 0 1px 0 rgba(255,255,255,0.45), inset 0 -1px 0 rgba(0,0,0,0.06); }
+  .world-back1 { left: 8%; right: 8%; top: 8%; bottom: 6%; border-radius: 40px; transform: rotate(5deg); transform-origin: 50% 100%;
+    box-shadow: 0 12px 26px -10px rgba(26,20,16,0.28), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(0,0,0,0.06); }
+  .world-front { inset: 4% 4% 0; border-radius: 42px; overflow: hidden;
+    box-shadow: 0 20px 40px -16px rgba(26,20,16,0.22), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(0,0,0,0.08); }
+  .world-tile:hover .world-back2 { transform: rotate(-10deg) translateY(-3px); }
+  .world-tile:hover .world-back1 { transform: rotate(7deg) translateY(-2px); }
+  .world-tile:hover .world-front { transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 30px 60px -16px rgba(26,20,16,0.32), inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -1px 0 rgba(0,0,0,0.08); }
+  .world-sheen { position: absolute; left: 10%; top: 8%; width: 60%; height: 30%; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.15) 50%, transparent 80%); filter: blur(8px); }
+  .world-count { position: absolute; left: 18px; top: 18px; padding: 5px 10px; border-radius: 999px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--ink-1); }
+  .world-overlay { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 24px 22px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.45) 100%); }
+  .world-title { font-family: var(--font-display); font-size: 32px; font-weight: 400; color: #FFFEFB; letter-spacing: -0.02em; line-height: 1.05; }
+  .world-years { font-family: var(--font-mono); font-size: 10.5px; color: rgba(255,254,251,0.7); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px; }
+  .world-blurb { margin: 20px 8px 0; font-size: 14px; line-height: 1.55; color: var(--ink-2); max-width: 32ch; }
+</style>

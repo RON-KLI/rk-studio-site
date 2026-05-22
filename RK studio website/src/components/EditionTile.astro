@@ -1,0 +1,35 @@
+---
+// EditionTile — a small app-icon squircle for a limited edition. Clicking opens
+// the Inquire sheet pre-filled with this edition's title (same mechanism as the
+// artwork pages).
+const { edition } = Astro.props;
+const d = edition.data;
+const grad = `linear-gradient(140deg, ${d.colorLight} 0%, ${d.colorMid} 60%, ${d.colorDeep} 100%)`;
+---
+<div class="edition-tile">
+  <button type="button" class="edition-btn press" data-open-inquire
+    data-work-title={d.title} data-work-medium="Edition" data-work-size={d.size}
+    aria-label={`Inquire about ${d.title}`}>
+    <div class="squircle specular edition-front" style={`background:${grad};`}>
+      <div class="edition-sheen" aria-hidden="true"></div>
+      <div class="lg-strong edition-price">{d.price}</div>
+    </div>
+  </button>
+  <div class="edition-meta">
+    <div class="edition-title">{d.title}</div>
+    <div class="edition-sub">{d.editionLabel.toUpperCase()}{d.size ? ' · ' + d.size.toUpperCase() : ''}</div>
+  </div>
+</div>
+
+<style>
+  .edition-tile { display: flex; flex-direction: column; gap: 14px; }
+  .edition-btn { position: relative; background: transparent; border: 0; padding: 0; cursor: pointer; }
+  .edition-front { position: relative; aspect-ratio: 1/1; border-radius: 28px; overflow: hidden;
+    box-shadow: 0 12px 24px -10px rgba(26,20,16,0.22), inset 0 1px 0 rgba(255,255,255,0.4); transition: transform 320ms var(--ease-spring), box-shadow 320ms var(--ease-spring); }
+  .edition-btn:hover .edition-front { transform: scale(1.02); box-shadow: 0 20px 40px -12px rgba(26,20,16,0.32), inset 0 1px 0 rgba(255,255,255,0.5); }
+  .edition-sheen { position: absolute; left: 14%; top: 10%; width: 55%; height: 25%; border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.55) 0%, transparent 70%); filter: blur(6px); }
+  .edition-price { position: absolute; right: 10px; top: 10px; padding: 4px 9px; border-radius: 999px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.06em; color: var(--ink-1); }
+  .edition-title { font-family: var(--font-display); font-style: italic; font-size: 18px; color: var(--ink-1); line-height: 1.15; letter-spacing: -0.005em; }
+  .edition-sub { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.04em; margin-top: 6px; }
+</style>

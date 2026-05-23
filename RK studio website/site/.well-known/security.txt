@@ -1,0 +1,8 @@
+# Ron Klimovsky Studio — security disclosure
+# https://securitytxt.org
+
+Contact: mailto:studio@ronklimovsky.com
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: en
+Canonical: https://ronklimovsky.com/.well-known/security.txt
+Policy: https://ronklimovsky.com/

@@ -33,7 +33,7 @@ function Exhibitions({ onInquire }) {
       {/* Featured upcoming */}
       <FeaturedShow x={window.EXHIBITIONS[0]} onInquire={onInquire} />
 
-      <div style={{ display: "flex", gap: 6, marginTop: 80, marginBottom: 28 }}>
+      <div className="exhibitions-filter-row" style={{ display: "flex", gap: 6, marginTop: 80, marginBottom: 28, flexWrap: "wrap" }}>
         {[["all", "All"], ["upcoming", "Upcoming"], ["current", "On view"], ["past", "Past"]].map(([id, label]) =>
         <button
           key={id}
@@ -140,7 +140,7 @@ function ShowRow({ x, index, onInquire }) {
       borderBottom: "1px solid var(--mist)"
     }}>
       {/* year + dot on the rail */}
-      <div style={{ display: "flex", alignItems: "center", gap: 18, position: "relative" }}>
+      <div className="show-row__year-row" style={{ display: "flex", alignItems: "center", gap: 18, position: "relative" }}>
         <span style={{ fontFamily: "var(--font-mono)", fontSize: 13, color: "var(--ink-2)", letterSpacing: "0.04em" }}>
           {x.year}
         </span>

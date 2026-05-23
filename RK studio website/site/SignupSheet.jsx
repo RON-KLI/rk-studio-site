@@ -29,6 +29,7 @@ function SignupSheet({ open, onClose }) {
   return (
     <div
       onClick={onClose}
+      className="signup-scrim"
       style={{
         position: "fixed", inset: 0,
         background: open ? "rgba(26,20,16,0.25)" : "transparent",
@@ -121,7 +122,7 @@ function SignupSheet({ open, onClose }) {
                 title="Enter a valid phone number with at least 7 digits — e.g. +1 555 000 0000" />
             </div>
 
-            <div style={{ display: "flex", gap: 8, marginTop: 24, alignItems: "center" }}>
+            <div className="sheet-actions" style={{ display: "flex", gap: 8, marginTop: 24, alignItems: "center" }}>
               <PrimaryBtn type="submit" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
                 <EnvelopeIcon size={13} /> Sign me up
               </PrimaryBtn>
@@ -133,7 +134,7 @@ function SignupSheet({ open, onClose }) {
                 color: "var(--ink-3)", border: 0, fontSize: 13, fontWeight: 500, cursor: "pointer"
               }}>
               Cancel</button>
-              <div style={{ marginLeft: "auto", fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--ink-3)", letterSpacing: "0.06em" }}>
+              <div className="sheet-esc-hint" style={{ marginLeft: "auto", fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--ink-3)", letterSpacing: "0.06em" }}>
 
             </div>
             </div>

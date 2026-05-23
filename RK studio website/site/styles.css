@@ -193,6 +193,23 @@ body[data-density="editorial"] {
 .mobile-only { display: none; }
 .desktop-only { display: initial; }
 
+/* Belt-and-suspenders: prevent any element from causing horizontal overflow
+   at narrow widths. `clip` (not `hidden`) preserves position: sticky/fixed
+   inside descendants — iOS Safari breaks sticky when an ancestor uses
+   overflow: hidden. */
+@media (max-width: 720px) {
+  html, body {
+    overflow-x: clip;
+  }
+  /* The mobile nav is position:fixed (so it stays anchored while page scrolls
+     and the show/hide transform works on iOS). Push the first section down
+     to leave room for it. */
+  body > #root > main > section:first-of-type,
+  body > #root > section:first-of-type {
+    padding-top: 78px !important;
+  }
+}
+
 /* Generic stack: any element with `data-stack="sm"` becomes 1-col under 720px */
 @media (max-width: 720px) {
   [data-stack="sm"] {
@@ -213,7 +230,21 @@ body[data-density="editorial"] {
     /* keep — individual sections still set their own padding */
   }
 
+  /* Default section padding override — any section.page-enter we haven't
+     opted into a specific class for still shrinks horizontally. */
+  section.page-enter:not(.exhibitions-pad):not(.about-pad):not(.hero-centered):not(.hero-pad) {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
   /* ── Hero — scale display type down so it doesn't overflow ────────────── */
+  .hero-centered {
+    padding: 32px 20px 80px !important;
+  }
+  .hero-bg-bleed {
+    top: -160px !important;
+    height: 620px !important;
+  }
   .hero-display {
     font-size: clamp(44px, 13vw, 76px) !important;
     line-height: 1.0 !important;
@@ -225,13 +256,89 @@ body[data-density="editorial"] {
     min-height: auto !important;
   }
 
+  /* Featured carousel — tighten the breathing room and pull arrows in */
+  .hero-centered .featured-carousel { margin-top: 80px !important; }
+  .hero-centered .lately-in-studio { margin-top: 72px !important; }
+  .hero-centered .updates-inline-signup { margin-top: 72px !important; }
+
+  /* Carousel arrows on the home hero must not poke outside the painting */
+  .featured-carousel .carousel-arrow-host { position: static !important; }
+  .featured-carousel .carousel-arrow-wrap--left,
+  .featured-carousel .carousel-arrow-wrap--right {
+    /* keep absolute but pull inward */
+    inset: auto !important;
+  }
+  .featured-carousel .carousel-arrow-wrap--left { left: 8px !important; }
+  .featured-carousel .carousel-arrow-wrap--right { right: 8px !important; }
+
+  /* Updates inline signup — the divider between Name + Phone should vanish
+     when the form wraps to two rows */
+  .updates-inline-signup form {
+    padding: 6px !important;
+    border-radius: 22px !important;
+  }
+  .updates-inline-signup form > [data-inline-divider] {
+    display: none !important;
+  }
+  .updates-inline-signup form > label {
+    flex: 1 1 100% !important;
+    padding: 10px 14px !important;
+  }
+  .updates-inline-signup form > button[type="submit"] {
+    width: 100% !important;
+    justify-content: center !important;
+    margin-top: 4px !important;
+  }
+
+  /* ── Hero editorial — floating caption pulled back inside ────────────── */
+  .hero-editorial-caption {
+    left: 12px !important;
+    bottom: 12px !important;
+    max-width: calc(100% - 24px) !important;
+  }
+
+  /* ── Hero stack — collapse the absolute card stack to a single card ──── */
+  .hero-stack-stack {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 16px 0 24px !important;
+  }
+  .hero-stack-card {
+    position: relative !important;
+    width: min(78%, 320px) !important;
+    transform: none !important;
+    opacity: 1 !important;
+    margin: 0 auto !important;
+  }
+  .hero-stack-card[data-active="false"] {
+    display: none !important;
+  }
+  .hero-stack-thumbs {
+    justify-content: center;
+  }
+
   /* ── Artwork detail ───────────────────────────────────────────────────── */
+  .artwork-back-row {
+    padding: 20px 20px 0 !important;
+  }
   .artwork-hero {
     padding: 16px 20px 56px !important;
     gap: 40px !important;
   }
   .artwork-h1 {
     font-size: clamp(34px, 9vw, 52px) !important;
+  }
+  .artwork-related {
+    padding: 0 20px !important;
+  }
+  .artwork-related .artwork-related-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+  .artwork-carousel-stage button[aria-label="Previous"],
+  .artwork-carousel-stage button[aria-label="Next"] {
+    width: 36px !important;
+    height: 36px !important;
   }
 
   /* ── About ────────────────────────────────────────────────────────────── */
@@ -243,9 +350,26 @@ body[data-density="editorial"] {
   }
   .about-portrait {
     position: static !important;
+    top: auto !important;
     max-width: 320px;
-    margin: 0 auto 32px;
+    margin: 0 auto 8px !important;
   }
+
+  /* ── On view ──────────────────────────────────────────────────────────── */
+  .onview-pad {
+    padding: 28px 20px 96px !important;
+  }
+  .onview-header h1 {
+    font-size: clamp(36px, 10vw, 56px) !important;
+  }
+  .onview-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+  /* Floating glass filter dock can't sit at top: 88 on mobile — it overlaps
+     the hamburger row. Hide it; the inline FilterChips row above the grid
+     stays accessible. */
+  .onview-filter-dock { display: none !important; }
 
   /* ── Footer ───────────────────────────────────────────────────────────── */
   .footer-grid {
@@ -263,21 +387,48 @@ body[data-density="editorial"] {
     align-items: flex-start !important;
     gap: 14px !important;
   }
+  .footer-bottom > div:last-child {
+    flex-wrap: wrap;
+    gap: 14px !important;
+  }
 
   /* ── Exhibitions — collapse the rail layout ──────────────────────────── */
   .exhibitions-pad {
-    padding: 56px 20px 96px !important;
+    padding: 40px 20px 96px !important;
+  }
+  .exhibitions-pad > div:first-of-type {
+    /* the eyebrow + h1 + intro p row */
+    margin-bottom: 32px !important;
   }
   .exhibitions-rail {
     display: none !important;
   }
+  .exhibitions-filter-row {
+    flex-wrap: wrap !important;
+    margin-top: 48px !important;
+  }
   .show-row {
     grid-template-columns: 1fr !important;
     padding-left: 0 !important;
-    gap: 18px !important;
+    gap: 8px !important;
+    padding: 20px 0 !important;
   }
   .show-row__year-row {
     margin-bottom: 4px;
+  }
+  .show-row > div:nth-child(2) {
+    padding-left: 0 !important;
+  }
+  .show-row > div:last-child {
+    text-align: left !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .show-row > div:last-child > div:last-child {
+    margin-top: 0 !important;
   }
   .show-row__dot {
     position: static !important;
@@ -290,6 +441,10 @@ body[data-density="editorial"] {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
     padding: 24px !important;
+    border-radius: 24px !important;
+  }
+  .next-show-card h2 {
+    font-size: clamp(28px, 7.5vw, 40px) !important;
   }
 
   /* ── Nav — hide desktop variants, show hamburger ─────────────────────── */
@@ -299,6 +454,17 @@ body[data-density="editorial"] {
   /* ── Inquire / Signup sheet ──────────────────────────────────────────── */
   .sheet-form-grid {
     grid-template-columns: 1fr !important;
+  }
+  /* Modal scrim padding shrinks so the sheet has room on narrow phones */
+  .inquire-scrim, .signup-scrim {
+    padding: 12px !important;
+  }
+  /* Footer action row: keep buttons stacked-friendly, hide ESC hint */
+  .sheet-actions {
+    flex-wrap: wrap !important;
+  }
+  .sheet-actions > .sheet-esc-hint {
+    display: none !important;
   }
 
   /* ── Admin: sidebar becomes horizontal chip strip ────────────────────── */
@@ -426,6 +592,40 @@ body[data-density="editorial"] {
   .nav-desktop { display: none !important; }
   .nav-desktop > * { display: none !important; }
   .nav-mobile { display: flex !important; }
+}
+
+/* Extra-small phones (≤ 380px): even tighter padding + smaller display type.
+   Reaches iPhone SE / Android 360-class devices. */
+@media (max-width: 380px) {
+  section.page-enter:not(.exhibitions-pad):not(.about-pad):not(.hero-centered):not(.hero-pad) {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .hero-centered { padding: 28px 16px 64px !important; }
+  .about-pad     { padding: 28px 16px 80px !important; }
+  .exhibitions-pad { padding: 32px 16px 80px !important; }
+  .artwork-hero  { padding: 12px 16px 48px !important; }
+  .artwork-related { padding: 0 16px !important; }
+  .footer-pad    { padding: 48px 16px 28px !important; }
+
+  .footer-monogram { font-size: 30px !important; }
+  .hero-display    { font-size: clamp(40px, 13vw, 64px) !important; }
+
+  /* Even tighter nav row */
+  .nav-mobile { padding: 12px 12px 0 !important; }
+  .nav-mobile [aria-label="Open menu"] {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .nav-mobile-name {
+    display: none !important;
+  }
+
+  /* The mobile nav Inquire button can ellipsize on very narrow phones */
+  .nav-mobile button[class*="press"] {
+    font-size: 12px !important;
+    padding: 8px 12px !important;
+  }
 }
 
 /* ----- Liquid glass surface — used by Nav, sheets, chips ----- */

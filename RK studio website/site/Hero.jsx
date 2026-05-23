@@ -30,12 +30,12 @@ function HeroCentered({ onCta, onInquire, onSignup, onView }) {
         className="hero-bg-bleed"
         style={{
           position: "absolute",
-          top: -120,
+          top: -220,
           left: "50%",
           transform: "translateX(-50%)",
           width: "100vw",
           maxWidth: "100vw",
-          height: 860,
+          height: 960,
           zIndex: 0,
           overflow: "hidden",
           pointerEvents: "none"
@@ -60,22 +60,14 @@ function HeroCentered({ onCta, onInquire, onSignup, onView }) {
             WebkitMaskImage:
               "linear-gradient(to bottom, " +
               "rgba(0,0,0,1) 0%, " +
-              "rgba(0,0,0,1) 38%, " +
-              "rgba(0,0,0,0.92) 52%, " +
-              "rgba(0,0,0,0.72) 64%, " +
-              "rgba(0,0,0,0.46) 76%, " +
-              "rgba(0,0,0,0.22) 86%, " +
-              "rgba(0,0,0,0.08) 93%, " +
+              "rgba(0,0,0,1) 45%, " +
+              "rgba(0,0,0,0.5) 75%, " +
               "rgba(0,0,0,0) 100%)",
             maskImage:
               "linear-gradient(to bottom, " +
               "rgba(0,0,0,1) 0%, " +
-              "rgba(0,0,0,1) 38%, " +
-              "rgba(0,0,0,0.92) 52%, " +
-              "rgba(0,0,0,0.72) 64%, " +
-              "rgba(0,0,0,0.46) 76%, " +
-              "rgba(0,0,0,0.22) 86%, " +
-              "rgba(0,0,0,0.08) 93%, " +
+              "rgba(0,0,0,1) 45%, " +
+              "rgba(0,0,0,0.5) 75%, " +
               "rgba(0,0,0,0) 100%)"
           }}>
         </image-slot>
@@ -83,7 +75,7 @@ function HeroCentered({ onCta, onInquire, onSignup, onView }) {
             without darkening the image — feathered, no visible boundary. */}
         <div style={{
           position: "absolute", inset: 0,
-          background: "linear-gradient(to bottom, rgba(251,248,244,0.45) 0%, rgba(251,248,244,0.16) 32%, rgba(251,248,244,0) 58%)",
+          background: "linear-gradient(to bottom, rgba(251,248,244,0.42) 0%, rgba(251,248,244,0.20) 30%, rgba(251,248,244,0.06) 55%, rgba(251,248,244,0) 80%)",
           pointerEvents: "none"
         }} />
       </div>
@@ -112,7 +104,7 @@ function HeroCentered({ onCta, onInquire, onSignup, onView }) {
         maxWidth: "16ch",
         textWrap: "balance"
       }}>
-        Creating <em className="hero-art-gradient" style={{ fontStyle: "italic", fontSize: "70px", fontWeight: "100" }}>Art.
+        Creating <em className="hero-art-gradient" style={{ fontStyle: "italic", fontSize: "49px", fontWeight: "100", marginLeft: "0.08em" }}>Art.
         </em><br />
         <em style={{ fontStyle: "italic", color: "var(--ink-2)" }}></em>
       </h1>
@@ -181,6 +173,7 @@ function FeaturedCarousel({ works, idx, onPrev, onNext, onSelect, onHover, onVie
   const work = works[idx];
   return (
     <div
+      className="featured-carousel"
       style={{ position: "relative", zIndex: 1, marginTop: 140, width: "min(820px, 92%)", display: "flex", flexDirection: "column", alignItems: "center" }}
       onMouseEnter={() => onHover(true)}
       onMouseLeave={() => onHover(false)}>
@@ -271,6 +264,7 @@ function FeaturedCarousel({ works, idx, onPrev, onNext, onSelect, onHover, onVie
 function CarouselArrow({ dir, onClick, ariaLabel }) {
   return (
     <div
+      className={"carousel-arrow-wrap--" + dir}
       style={{
         position: "absolute",
         top: "50%",
@@ -313,6 +307,7 @@ function LatelyInTheStudio({ onSeeMore, onView }) {
   return (
     <section
       aria-label="Lately in the studio"
+      className="lately-in-studio"
       style={{
         position: "relative",
         zIndex: 1,
@@ -459,7 +454,7 @@ function UpdatesInlineSignup() {
   const [sent, setSent] = React.useState(false);
 
   return (
-    <div style={{ position: "relative", zIndex: 1, marginTop: 120, width: "min(820px, 94%)", textAlign: "center" }}>
+    <div className="updates-inline-signup" style={{ position: "relative", zIndex: 1, marginTop: 120, width: "min(820px, 94%)", textAlign: "center" }}>
       <Eyebrow style={{ marginBottom: 16 }}>Studio updates</Eyebrow>
       <h2 style={{
         fontFamily: "var(--font-display)",
@@ -511,7 +506,7 @@ function UpdatesInlineSignup() {
           textAlign: "left"
         }}>
           <InlineField label="Name" value={name} onChange={setName} type="text" autoComplete="name" placeholder="Your name" grow={1} required />
-          <span style={{ width: 1, height: 28, background: "var(--mist)", flex: "0 0 auto" }} aria-hidden />
+          <span data-inline-divider style={{ width: 1, height: 28, background: "var(--mist)", flex: "0 0 auto" }} aria-hidden />
           <InlineField
             label="Phone"
             value={phone}
@@ -626,7 +621,7 @@ function HeroEditorial({ onCta, onInquire }) {
             <Painting work={featured} aspect="3/4" />
           </div>
           {/* hovering caption */}
-          <div className="lg-strong" style={{
+          <div className="lg-strong hero-editorial-caption" style={{
             position: "absolute",
             left: -32, bottom: 36,
             padding: "14px 18px",
@@ -683,7 +678,7 @@ function HeroStack({ onCta, onInquire }) {
             <GhostBtn onClick={onInquire}>Inquire</GhostBtn>
           </div>
 
-          <div style={{ display: "flex", gap: 10, marginTop: 40 }}>
+          <div className="hero-stack-thumbs" style={{ display: "flex", gap: 10, marginTop: 40 }}>
             {works.map((w, i) =>
             <button
               key={w.id}
@@ -708,13 +703,15 @@ function HeroStack({ onCta, onInquire }) {
         </div>
 
         {/* Stack */}
-        <div style={{ position: "relative", height: 600, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div className="hero-stack-stack" style={{ position: "relative", height: 600, display: "flex", alignItems: "center", justifyContent: "center" }}>
           {works.map((w, i) => {
             const offset = i - active;
             const z = works.length - Math.abs(offset);
             return (
               <div
                 key={w.id}
+                className="hero-stack-card"
+                data-active={i === active ? "true" : "false"}
                 onClick={() => setActive(i)}
                 style={{
                   position: "absolute",

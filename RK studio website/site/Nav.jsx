@@ -35,23 +35,38 @@ function useHideOnScrollDown(threshold = 80) {
   const [hidden, setHidden] = React.useState(false);
   React.useEffect(() => {
     let lastY = window.scrollY || 0;
-    let ticking = false;
+    let accumDown = 0;
+    let accumUp = 0;
+    let isHidden = false;
     const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const y = window.scrollY || 0;
-        const dy = y - lastY;
-        if (y < threshold) {
-          setHidden(false);
-        } else if (dy > 6) {
+      const y = window.scrollY || 0;
+      const dy = y - lastY;
+      lastY = y;
+
+      // Near the top — always reveal, reset accumulators.
+      if (y < threshold) {
+        accumDown = 0;
+        accumUp = 0;
+        if (isHidden) { isHidden = false; setHidden(false); }
+        return;
+      }
+
+      if (dy > 0) {
+        accumDown += dy;
+        accumUp = 0;
+        if (!isHidden && accumDown > 24) {
+          isHidden = true;
           setHidden(true);
-        } else if (dy < -6) {
+        }
+      } else if (dy < 0) {
+        accumUp += -dy;
+        accumDown = 0;
+        // tiny upward swipe is enough to bring it back
+        if (isHidden && accumUp > 6) {
+          isHidden = false;
           setHidden(false);
         }
-        lastY = y;
-        ticking = false;
-      });
+      }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -70,36 +85,48 @@ function NavMobile({ current, onNav, onInquire, hidden }) {
   const go = (id) => { onNav(id); setOpen(false); };
   return (
     <div className="nav-mobile" style={{
-      position: "sticky", top: 0, zIndex: 80,
+      position: "fixed", top: 0, left: 0, right: 0, zIndex: 80,
       padding: "14px 16px 0",
       display: "none",
-      justifyContent: "space-between",
-      alignItems: "center",
-      gap: 10,
       transform: hidden && !open ? "translateY(-130%)" : "translateY(0)",
       transition: "transform 380ms cubic-bezier(0.22, 0.85, 0.32, 1)",
-      willChange: "transform"
+      willChange: "transform",
+      pointerEvents: "none"
     }}>
-      <button onClick={() => onNav("home")} style={{ background: "transparent", border: 0, padding: 0, cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
-        <Monogram />
-        <span style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: 17, color: "var(--ink-1)", letterSpacing: "-0.01em" }}>Ron Klimovsky</span>
-      </button>
-      <div style={{ display: "flex", gap: 8 }}>
-        <button onClick={onInquire} className="press" style={{
-          background: "var(--ink-1)", color: "var(--bone)", border: 0,
-          padding: "10px 16px", borderRadius: 999, fontFamily: "var(--font-ui)",
-          fontSize: 13, fontWeight: 500, cursor: "pointer"
-        }}>Inquire</button>
-        <button onClick={() => setOpen(true)} className="lg press" aria-label="Open menu" style={{
-          width: 40, height: 40, borderRadius: 999, border: 0,
-          display: "grid", placeItems: "center", color: "var(--ink-1)", cursor: "pointer"
-        }}><MenuIcon size={18} /></button>
+      <div className="lg" style={{
+        pointerEvents: "auto",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        gap: 10,
+        height: 54,
+        padding: "0 6px 0 14px",
+        borderRadius: 999,
+        width: "100%"
+      }}>
+        <button onClick={() => onNav("home")} style={{ background: "transparent", border: 0, padding: 0, cursor: "pointer", display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
+          <Monogram />
+          <span className="nav-mobile-name" style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: 17, color: "var(--ink-1)", letterSpacing: "-0.01em", whiteSpace: "nowrap" }}>Ron Klimovsky</span>
+        </button>
+        <div style={{ display: "flex", gap: 8, alignItems: "center", flex: "0 0 auto" }}>
+          <button onClick={onInquire} className="press" style={{
+            background: "var(--ink-1)", color: "var(--bone)", border: 0,
+            padding: "9px 16px", borderRadius: 999, fontFamily: "var(--font-ui)",
+            fontSize: 13, fontWeight: 500, cursor: "pointer"
+          }}>Inquire</button>
+          <button onClick={() => setOpen((o) => !o)} aria-label={open ? "Close menu" : "Open menu"} style={{
+            width: 38, height: 38, borderRadius: 999, border: 0,
+            background: "transparent",
+            display: "grid", placeItems: "center", color: "var(--ink-1)", cursor: "pointer"
+          }}>{open ? <CloseIcon size={18} /> : <MenuIcon size={18} />}</button>
+        </div>
       </div>
 
       {/* drawer */}
       {open && (
         <div onClick={() => setOpen(false)} style={{
           position: "fixed", inset: 0, zIndex: 90,
+          pointerEvents: "auto",
           background: "rgba(26,20,16,0.28)",
           backdropFilter: "saturate(180%) blur(20px)",
           WebkitBackdropFilter: "saturate(180%) blur(20px)",
@@ -108,6 +135,7 @@ function NavMobile({ current, onNav, onInquire, hidden }) {
             position: "absolute", top: 12, left: 12, right: 12,
             borderRadius: 28,
             padding: "20px 18px 22px",
+            background: "rgba(251, 248, 244, 0.94)",
             animation: "navMobileIn 280ms cubic-bezier(0.16, 1, 0.3, 1)"
           }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>

@@ -2,45 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 
   <!-- Primary meta -->
-  <title>Ron Klimovsky Studio — Paintings, drawings & editions</title>
-  <meta name="description" content="Ron Klimovsky (ARC) — multidisciplinary visual artist. Current paintings, drawings, intaglio editions, and exhibitions, direct from the studio.">
+  <title>Ron Klimovsky Studio — Contemporary visual artist · paintings, drawings, editions</title>
+  <meta name="description" content="Ron Klimovsky (ARC) — contemporary visual artist working in oil on linen, drawings on paper, and hand-pulled intaglio editions. Current studio works, exhibitions, and direct inquiries — no gallery, no waiting list.">
   <meta name="author" content="Ron Klimovsky">
-  <meta name="keywords" content="Ron Klimovsky, ARC, visual artist, contemporary art, paintings, drawings, editions, art studio, fine art, gallery, exhibitions">
+  <meta name="publisher" content="Ron Klimovsky Studio">
+  <meta name="creator" content="Ron Klimovsky">
+  <meta name="keywords" content="Ron Klimovsky, ARC artist, contemporary visual artist, oil paintings, fine art paintings, drawings on paper, charcoal drawings, intaglio prints, limited edition prints, Rooms at dawn, contemporary interior paintings, art studio direct, buy art from artist, Tarrytown studio, open studio 2026">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="googlebot" content="index, follow, max-image-preview:large">
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="bingbot" content="index, follow, max-image-preview:large">
   <meta name="theme-color" content="#FBF6EC" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1A1410" media="(prefers-color-scheme: dark)">
   <meta name="color-scheme" content="light dark">
   <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="RK Studio">
+  <meta name="application-name" content="Ron Klimovsky Studio">
+  <meta name="rating" content="general">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="canonical" href="https://ronklimovsky.com/">
+  <link rel="alternate" hreflang="en" href="https://ronklimovsky.com/">
+  <link rel="alternate" hreflang="x-default" href="https://ronklimovsky.com/">
   <link rel="manifest" href="/manifest.webmanifest">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Ron Klimovsky Studio">
-  <meta property="og:title" content="Ron Klimovsky Studio">
-  <meta property="og:description" content="Ron Klimovsky (ARC) — a multidisciplinary visual artist working mainly in the US. Paintings, drawings, exhibitions, and editions, direct from the studio.">
+  <meta property="og:title" content="Ron Klimovsky Studio — Contemporary visual artist">
+  <meta property="og:description" content="Paintings, drawings, and hand-pulled intaglio editions, direct from the studio. No gallery, no waiting list — inquiries go to studio@ronklimovsky.com.">
   <meta property="og:url" content="https://ronklimovsky.com/">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://ronklimovsky.com/assets/logo.png">
-  <meta property="og:image:alt" content="Ron Klimovsky Studio monogram">
+  <meta property="og:image" content="https://ronklimovsky.com/assets/hero-sunrise.jpg">
+  <meta property="og:image:secure_url" content="https://ronklimovsky.com/assets/hero-sunrise.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Sunrise across the studio wall — a Ron Klimovsky painting">
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Ron Klimovsky Studio">
-  <meta name="twitter:description" content="Visual artist Ron Klimovsky (ARC) — paintings, drawings, editions, and exhibitions, direct from the studio.">
-  <meta name="twitter:image" content="https://ronklimovsky.com/assets/logo.png">
+  <meta name="twitter:description" content="Contemporary visual artist — paintings, drawings, editions, direct from the studio.">
+  <meta name="twitter:image" content="https://ronklimovsky.com/assets/hero-sunrise.jpg">
+  <meta name="twitter:image:alt" content="Sunrise across the studio wall — a Ron Klimovsky painting">
 
   <!-- Favicons -->
   <link rel="icon" type="image/png" href="assets/logo.png">
   <link rel="apple-touch-icon" href="assets/logo.png">
+  <link rel="mask-icon" href="assets/logo.png" color="#1A1410">
 
   <!-- Performance: preconnect to font origins (Google Fonts) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://unpkg.com">
+
+  <!-- LCP image preload — the hero painting drives the first paint -->
+  <link rel="preload" as="image" href="assets/hero-sunrise.jpg" fetchpriority="high">
 
   <!-- AI agents: see llms.txt for a structured studio summary -->
   <link rel="alternate" type="text/plain" title="LLM-friendly site summary" href="/llms.txt">
@@ -53,19 +74,57 @@
   {
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": "https://ronklimovsky.com/#person",
     "name": "Ron Klimovsky",
-    "alternateName": "ARC",
+    "alternateName": ["ARC", "Ron Klimovsky Studio"],
     "jobTitle": "Visual artist",
-    "description": "Ron Klimovsky (ARC) is a multidisciplinary visual artist working mainly in the US. He grew up in a family of second-generation gallerists and approaches art from first principles.",
+    "description": "Ron Klimovsky (ARC) is a contemporary visual artist working in oil on linen and panel, graphite and charcoal on paper, and small-edition intaglio prints. He grew up in a family of second-generation gallerists and approaches art from first principles.",
     "url": "https://ronklimovsky.com/",
     "email": "studio@ronklimovsky.com",
-    "image": "https://ronklimovsky.com/assets/logo.png",
-    "knowsAbout": ["Painting", "Drawing", "Printmaking", "Contemporary art", "Visual art"],
-    "worksFor": {
-      "@type": "Organization",
-      "name": "Ron Klimovsky Studio",
-      "url": "https://ronklimovsky.com/",
-      "email": "studio@ronklimovsky.com"
+    "image": "https://ronklimovsky.com/assets/studio-portrait.jpg",
+    "nationality": "American",
+    "knowsAbout": ["Painting", "Oil painting", "Drawing", "Charcoal drawing", "Printmaking", "Intaglio", "Contemporary art", "Visual art"],
+    "worksFor": { "@id": "https://ronklimovsky.com/#studio" },
+    "sameAs": [
+      "https://ronklimovsky.com/"
+    ]
+  }
+  </script>
+
+  <!-- Structured data — Organization (the studio) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["Organization", "ArtGallery"],
+    "@id": "https://ronklimovsky.com/#studio",
+    "name": "Ron Klimovsky Studio",
+    "legalName": "Ron Klimovsky Studio",
+    "url": "https://ronklimovsky.com/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ronklimovsky.com/assets/logo.png",
+      "width": 512,
+      "height": 512
+    },
+    "image": "https://ronklimovsky.com/assets/hero-sunrise.jpg",
+    "email": "studio@ronklimovsky.com",
+    "foundingDate": "2014",
+    "founder": { "@id": "https://ronklimovsky.com/#person" },
+    "areaServed": "Worldwide",
+    "knowsLanguage": ["en", "es"],
+    "slogan": "Paintings, drawings, and editions, direct from the studio.",
+    "description": "Ron Klimovsky Studio is the working studio of contemporary visual artist Ron Klimovsky (ARC). Paintings, drawings, and small-edition intaglio prints, sold direct without gallery representation.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "Studio inquiries",
+      "email": "studio@ronklimovsky.com",
+      "availableLanguage": ["English", "Spanish"]
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Tarrytown",
+      "addressRegion": "NY",
+      "addressCountry": "US"
     }
   }
   </script>
@@ -75,29 +134,17 @@
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": "https://ronklimovsky.com/#website",
     "name": "Ron Klimovsky Studio",
+    "alternateName": "RK Studio",
     "url": "https://ronklimovsky.com/",
     "inLanguage": "en",
-    "publisher": {
-      "@type": "Person",
-      "name": "Ron Klimovsky"
+    "publisher": { "@id": "https://ronklimovsky.com/#studio" },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://ronklimovsky.com/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
     }
-  }
-  </script>
-
-  <!-- Structured data — ArtGallery (the studio itself) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ArtGallery",
-    "name": "Ron Klimovsky Studio",
-    "url": "https://ronklimovsky.com/",
-    "email": "studio@ronklimovsky.com",
-    "image": "https://ronklimovsky.com/assets/logo.png",
-    "foundingDate": "2014",
-    "founder": { "@type": "Person", "name": "Ron Klimovsky" },
-    "areaServed": "Worldwide",
-    "sameAs": ["https://ronklimovsky.com/"]
   }
   </script>
 
@@ -106,20 +153,60 @@
   {
     "@context": "https://schema.org",
     "@type": "ItemList",
+    "@id": "https://ronklimovsky.com/#on-view",
     "name": "Currently in the studio — Ron Klimovsky",
     "url": "https://ronklimovsky.com/#on-view",
     "itemListOrder": "http://schema.org/ItemListUnordered",
     "numberOfItems": 9,
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "item": { "@type": "VisualArtwork", "name": "Morning, with the window open", "artist": { "@type": "Person", "name": "Ron Klimovsky" }, "artMedium": "Oil on linen", "artworkSurface": "Linen", "width": "36 in", "height": "48 in", "dateCreated": "2025", "genre": "Painting" } },
-      { "@type": "ListItem", "position": 2, "item": { "@type": "VisualArtwork", "name": "A blue room, briefly", "artist": { "@type": "Person", "name": "Ron Klimovsky" }, "artMedium": "Graphite on paper", "width": "11 in", "height": "14 in", "dateCreated": "2024", "genre": "Drawing" } },
-      { "@type": "ListItem", "position": 3, "item": { "@type": "VisualArtwork", "name": "Hours, before noon", "artist": { "@type": "Person", "name": "Ron Klimovsky" }, "artMedium": "Oil on linen", "width": "48 in", "height": "60 in", "dateCreated": "2025", "genre": "Painting" } },
-      { "@type": "ListItem", "position": 4, "item": { "@type": "VisualArtwork", "name": "Late winter, north light", "artist": { "@type": "Person", "name": "Ron Klimovsky" }, "artMedium": "Oil on panel", "width": "18 in", "height": "24 in", "dateCreated": "2024", "genre": "Painting" } },
-      { "@type": "ListItem", "position": 5, "item": { "@type": "VisualArtwork", "name": "Quiet hour", "artist": { "@type": "Person", "name": "Ron Klimovsky" }, "artMedium": "Charcoal on paper", "width": "22 in", "height": "30 in", "dateCreated": "2025", "genre": "Drawing" } },
-      { "@type": "ListItem", "position": 6, "item": { "@type": "VisualArtwork", "name": "An open door, again", "artist": { "@type": "Person", "name": "Ron Klimovsky" }, "artMedium": "Oil on linen", "width": "36 in", "height": "36 in", "dateCreated": "2025", "genre": "Painting" } },
-      { "@type": "ListItem", "position": 7, "item": { "@type": "VisualArtwork", "name": "Studio floor, October", "artist": { "@type": "Person", "name": "Ron Klimovsky" }, "artMedium": "Oil on linen", "width": "40 in", "height": "30 in", "dateCreated": "2023", "genre": "Painting" } },
-      { "@type": "ListItem", "position": 8, "item": { "@type": "VisualArtwork", "name": "Two windows, faintly", "artist": { "@type": "Person", "name": "Ron Klimovsky" }, "artMedium": "Oil on linen", "width": "60 in", "height": "40 in", "dateCreated": "2024", "genre": "Painting" } },
-      { "@type": "ListItem", "position": 9, "item": { "@type": "VisualArtwork", "name": "After rain, the room held still", "artist": { "@type": "Person", "name": "Ron Klimovsky" }, "artMedium": "Oil on panel", "width": "24 in", "height": "18 in", "dateCreated": "2025", "genre": "Painting" } }
+      { "@type": "ListItem", "position": 1, "item": { "@type": "VisualArtwork", "name": "Morning, with the window open", "artist": { "@id": "https://ronklimovsky.com/#person" }, "creator": { "@id": "https://ronklimovsky.com/#person" }, "artMedium": "Oil on linen", "artworkSurface": "Linen", "artform": "Painting", "width": "36 in", "height": "48 in", "dateCreated": "2025", "genre": "Painting", "isFamilyFriendly": true, "offers": { "@type": "Offer", "availability": "https://schema.org/InStock", "url": "https://ronklimovsky.com/#inquire", "seller": { "@id": "https://ronklimovsky.com/#studio" } } } },
+      { "@type": "ListItem", "position": 2, "item": { "@type": "VisualArtwork", "name": "A blue room, briefly", "artist": { "@id": "https://ronklimovsky.com/#person" }, "creator": { "@id": "https://ronklimovsky.com/#person" }, "artMedium": "Graphite on paper", "width": "11 in", "height": "14 in", "dateCreated": "2024", "genre": "Drawing", "offers": { "@type": "Offer", "availability": "https://schema.org/SoldOut", "seller": { "@id": "https://ronklimovsky.com/#studio" } } } },
+      { "@type": "ListItem", "position": 3, "item": { "@type": "VisualArtwork", "name": "Hours, before noon", "artist": { "@id": "https://ronklimovsky.com/#person" }, "creator": { "@id": "https://ronklimovsky.com/#person" }, "artMedium": "Oil on linen", "width": "48 in", "height": "60 in", "dateCreated": "2025", "genre": "Painting", "offers": { "@type": "Offer", "availability": "https://schema.org/InStock", "url": "https://ronklimovsky.com/#inquire", "seller": { "@id": "https://ronklimovsky.com/#studio" } } } },
+      { "@type": "ListItem", "position": 4, "item": { "@type": "VisualArtwork", "name": "Late winter, north light", "artist": { "@id": "https://ronklimovsky.com/#person" }, "creator": { "@id": "https://ronklimovsky.com/#person" }, "artMedium": "Oil on panel", "width": "18 in", "height": "24 in", "dateCreated": "2024", "genre": "Painting", "offers": { "@type": "Offer", "availability": "https://schema.org/InStock", "url": "https://ronklimovsky.com/#inquire", "seller": { "@id": "https://ronklimovsky.com/#studio" } } } },
+      { "@type": "ListItem", "position": 5, "item": { "@type": "VisualArtwork", "name": "Quiet hour", "artist": { "@id": "https://ronklimovsky.com/#person" }, "creator": { "@id": "https://ronklimovsky.com/#person" }, "artMedium": "Charcoal on paper", "width": "22 in", "height": "30 in", "dateCreated": "2025", "genre": "Drawing", "offers": { "@type": "Offer", "availability": "https://schema.org/SoldOut", "seller": { "@id": "https://ronklimovsky.com/#studio" } } } },
+      { "@type": "ListItem", "position": 6, "item": { "@type": "VisualArtwork", "name": "An open door, again", "artist": { "@id": "https://ronklimovsky.com/#person" }, "creator": { "@id": "https://ronklimovsky.com/#person" }, "artMedium": "Oil on linen", "width": "36 in", "height": "36 in", "dateCreated": "2025", "genre": "Painting", "offers": { "@type": "Offer", "availability": "https://schema.org/InStock", "url": "https://ronklimovsky.com/#inquire", "seller": { "@id": "https://ronklimovsky.com/#studio" } } } },
+      { "@type": "ListItem", "position": 7, "item": { "@type": "VisualArtwork", "name": "Studio floor, October", "artist": { "@id": "https://ronklimovsky.com/#person" }, "creator": { "@id": "https://ronklimovsky.com/#person" }, "artMedium": "Oil on linen", "width": "40 in", "height": "30 in", "dateCreated": "2023", "genre": "Painting", "offers": { "@type": "Offer", "availability": "https://schema.org/SoldOut", "seller": { "@id": "https://ronklimovsky.com/#studio" } } } },
+      { "@type": "ListItem", "position": 8, "item": { "@type": "VisualArtwork", "name": "Two windows, faintly", "artist": { "@id": "https://ronklimovsky.com/#person" }, "creator": { "@id": "https://ronklimovsky.com/#person" }, "artMedium": "Oil on linen", "width": "60 in", "height": "40 in", "dateCreated": "2024", "genre": "Painting", "offers": { "@type": "Offer", "availability": "https://schema.org/InStock", "url": "https://ronklimovsky.com/#inquire", "seller": { "@id": "https://ronklimovsky.com/#studio" } } } },
+      { "@type": "ListItem", "position": 9, "item": { "@type": "VisualArtwork", "name": "After rain, the room held still", "artist": { "@id": "https://ronklimovsky.com/#person" }, "creator": { "@id": "https://ronklimovsky.com/#person" }, "artMedium": "Oil on panel", "width": "24 in", "height": "18 in", "dateCreated": "2025", "genre": "Painting", "offers": { "@type": "Offer", "availability": "https://schema.org/InStock", "url": "https://ronklimovsky.com/#inquire", "seller": { "@id": "https://ronklimovsky.com/#studio" } } } }
+    ]
+  }
+  </script>
+
+  <!-- Structured data — Editions catalogue (ItemList of Product/Offer pairs) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": "https://ronklimovsky.com/#editions",
+    "name": "Editions and prints — Ron Klimovsky Studio",
+    "url": "https://ronklimovsky.com/#editions",
+    "numberOfItems": 6,
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "item": { "@type": "Product", "name": "Sunrise, study I", "category": "Limited-edition intaglio print", "brand": { "@id": "https://ronklimovsky.com/#studio" }, "description": "Hand-pulled intaglio print, edition of 30. 12 × 16 in. Numbered and signed.", "offers": { "@type": "Offer", "priceCurrency": "USD", "price": "420", "availability": "https://schema.org/InStock", "seller": { "@id": "https://ronklimovsky.com/#studio" } } } },
+      { "@type": "ListItem", "position": 2, "item": { "@type": "Product", "name": "Window, plate II", "category": "Limited-edition intaglio print", "brand": { "@id": "https://ronklimovsky.com/#studio" }, "description": "Hand-pulled intaglio print, edition of 25. 11 × 14 in. Numbered and signed.", "offers": { "@type": "Offer", "priceCurrency": "USD", "price": "380", "availability": "https://schema.org/InStock", "seller": { "@id": "https://ronklimovsky.com/#studio" } } } },
+      { "@type": "ListItem", "position": 3, "item": { "@type": "Product", "name": "Blue hour", "category": "Limited-edition intaglio print", "brand": { "@id": "https://ronklimovsky.com/#studio" }, "description": "Hand-pulled intaglio print, edition of 40. 10 × 12 in. Numbered and signed.", "offers": { "@type": "Offer", "priceCurrency": "USD", "price": "320", "availability": "https://schema.org/InStock", "seller": { "@id": "https://ronklimovsky.com/#studio" } } } },
+      { "@type": "ListItem", "position": 4, "item": { "@type": "Product", "name": "Mauve, with peach", "category": "Limited-edition intaglio print", "brand": { "@id": "https://ronklimovsky.com/#studio" }, "description": "Hand-pulled intaglio print, edition of 30. 12 × 12 in. Numbered and signed.", "offers": { "@type": "Offer", "priceCurrency": "USD", "price": "420", "availability": "https://schema.org/InStock", "seller": { "@id": "https://ronklimovsky.com/#studio" } } } },
+      { "@type": "ListItem", "position": 5, "item": { "@type": "Product", "name": "Charcoal field", "category": "Limited-edition intaglio print", "brand": { "@id": "https://ronklimovsky.com/#studio" }, "description": "Hand-pulled intaglio print, edition of 50. 9 × 12 in. Numbered and signed.", "offers": { "@type": "Offer", "priceCurrency": "USD", "price": "260", "availability": "https://schema.org/InStock", "seller": { "@id": "https://ronklimovsky.com/#studio" } } } },
+      { "@type": "ListItem", "position": 6, "item": { "@type": "Product", "name": "Golden plate", "category": "Limited-edition intaglio print", "brand": { "@id": "https://ronklimovsky.com/#studio" }, "description": "Hand-pulled intaglio print, edition of 20. 14 × 11 in. Numbered and signed.", "offers": { "@type": "Offer", "priceCurrency": "USD", "price": "520", "availability": "https://schema.org/InStock", "seller": { "@id": "https://ronklimovsky.com/#studio" } } } }
+    ]
+  }
+  </script>
+
+  <!-- Structured data — Studio notes (Blog feed for AI freshness signal) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": "https://ronklimovsky.com/#notes",
+    "name": "Studio notes — Ron Klimovsky",
+    "description": "A short journal kept from the studio. Process, light, false starts.",
+    "url": "https://ronklimovsky.com/#notes",
+    "author": { "@id": "https://ronklimovsky.com/#person" },
+    "publisher": { "@id": "https://ronklimovsky.com/#studio" },
+    "blogPost": [
+      { "@type": "BlogPosting", "headline": "A week of false starts", "datePublished": "2026-03-14", "author": { "@id": "https://ronklimovsky.com/#person" }, "articleBody": "The light has been wrong. I rehung two paintings and started a third." },
+      { "@type": "BlogPosting", "headline": "On scraping back", "datePublished": "2026-02-27", "author": { "@id": "https://ronklimovsky.com/#person" }, "articleBody": "I scraped back the floor of \"Hours, before noon\" and started it again. The first version was a polite painting. Polite paintings don't last in this room." },
+      { "@type": "BlogPosting", "headline": "The studio is colder than I thought", "datePublished": "2026-01-12", "author": { "@id": "https://ronklimovsky.com/#person" }, "articleBody": "I am painting in two sweaters. The cold slows the work down, which is not a bad thing." }
     ]
   }
   </script>
@@ -147,26 +234,52 @@
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    "@id": "https://ronklimovsky.com/#faq",
     "mainEntity": [
       {
         "@type": "Question",
         "name": "Who is Ron Klimovsky?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Ron Klimovsky (a.k.a. ARC) is a multidisciplinary visual artist based in the United States. He works mainly in oil on linen and panel, graphite and charcoal on paper, and small-edition intaglio prints." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Ron Klimovsky (a.k.a. ARC) is a contemporary visual artist based in the United States. He works mainly in oil on linen and panel, graphite and charcoal on paper, and small-edition intaglio prints. His ongoing series Rooms at dawn paints interiors in the hour before the day begins." }
       },
       {
         "@type": "Question",
-        "name": "How do I acquire a painting?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Write directly to the studio at studio@ronklimovsky.com or use the inquire form on the studio site. There is no waiting list. The studio replies within a few days." }
+        "name": "How do I buy a Ron Klimovsky painting?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Write directly to the studio at studio@ronklimovsky.com or use the inquire form on the studio site at ronklimovsky.com. The studio sells direct without gallery representation. There is no agent and no waiting list. Replies arrive within a few days." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Ron Klimovsky have gallery representation?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Ron Klimovsky Studio sells direct from the artist. There is no exclusive gallery, no agent, and no waiting list. Acquisitions and commissions go through studio@ronklimovsky.com." }
       },
       {
         "@type": "Question",
         "name": "Is the studio open to visitors?",
-        "acceptedAnswer": { "@type": "Answer", "text": "The studio is currently closed to drop-ins. During open-studio windows, visits are by appointment only. The next open studio is April 18 — June 14, 2026 in Tarrytown, NY." }
+        "acceptedAnswer": { "@type": "Answer", "text": "The studio is generally closed to drop-ins. During open-studio windows, visits are by appointment only. The next open studio is Rooms at dawn — open studio, April 18 to June 14, 2026, in Tarrytown, NY." }
       },
       {
         "@type": "Question",
         "name": "Does the studio sell limited-edition prints?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The studio releases hand-pulled intaglio editions from copper and zinc plates. Editions range from 20 to 50, are numbered and signed, and are never re-issued." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The studio releases hand-pulled intaglio editions from copper and zinc plates. Editions range from 20 to 50, are numbered and signed, and are never re-issued. Current prints are priced from $260 to $520 USD." }
+      },
+      {
+        "@type": "Question",
+        "name": "What media does Ron Klimovsky work in?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Oil on linen and oil on panel for paintings; graphite and charcoal on paper for drawings; copper and zinc plate intaglio for limited-edition prints." }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is Ron Klimovsky based?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The studio is in Tarrytown, New York, in the United States. Inquiries and shipping are handled worldwide." }
+      },
+      {
+        "@type": "Question",
+        "name": "What does ARC stand for?",
+        "acceptedAnswer": { "@type": "Answer", "text": "ARC is the artist's signature initial mark — used on works, prints, and the studio monogram. The full name is Ron Klimovsky." }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does the studio take to reply to inquiries?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Replies typically arrive within a few days, often sooner. Acquisition, press, and curator correspondence all go to studio@ronklimovsky.com." }
       }
     ]
   }
@@ -228,19 +341,28 @@
   <div id="root">
     <main hidden>
       <header>
-        <h1>Ron Klimovsky Studio</h1>
-        <p><strong>Ron Klimovsky</strong> (a.k.a. ARC) is a multidisciplinary visual artist working mainly in the United States. The studio is the primary public surface for the work — paintings, drawings, editions, and a calendar of exhibitions. There is no agent and no waiting list; inquiries go directly to the studio at <a href="mailto:studio@ronklimovsky.com">studio@ronklimovsky.com</a>.</p>
+        <h1>Ron Klimovsky — Contemporary visual artist</h1>
+        <p><strong>Ron Klimovsky</strong> (a.k.a. <strong>ARC</strong>) is a contemporary visual artist working mainly in the United States. The studio is the primary public surface for the work — paintings in oil on linen and panel, drawings in graphite and charcoal, and limited-edition intaglio prints. There is no gallery representation, no agent, and no waiting list; inquiries go directly to the studio at <a href="mailto:studio@ronklimovsky.com">studio@ronklimovsky.com</a>.</p>
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="#on-view">Currently in the studio</a></li>
+            <li><a href="#editions">Editions and prints</a></li>
+            <li><a href="#exhibitions">Exhibitions</a></li>
+            <li><a href="#about">About the artist</a></li>
+            <li><a href="#inquire">Inquire</a></li>
+          </ul>
+        </nav>
       </header>
 
-      <section aria-labelledby="bio">
-        <h2 id="bio">About</h2>
+      <section id="about" aria-labelledby="about-h">
+        <h2 id="about-h">About Ron Klimovsky</h2>
         <p>I grew up in a family of second-generation gallerists and saw the art world from the inside before deciding to make work myself. I approach art from first principles and am deliberately discreet about process and biography — the work itself is the medium for the ideas.</p>
         <p>I work primarily in oil on linen, oil on panel, graphite on paper, charcoal on paper, and small-edition intaglio prints. Ongoing series include <em>Rooms at dawn</em> (interiors painted in the hour before the day begins) and <em>Drawings</em> (a daily graphite-and-charcoal practice).</p>
         <p>Ron Klimovsky Studio is my way of financing the creation of art, so I can make more and greater art.</p>
       </section>
 
-      <section aria-labelledby="on-view" id="on-view">
-        <h2 id="on-view">Currently in the studio</h2>
+      <section id="on-view" aria-labelledby="on-view-h">
+        <h2 id="on-view-h">Currently in the studio — paintings & drawings on view</h2>
         <ol>
           <li><strong><em>Morning, with the window open</em></strong> — oil on linen, 48 × 36 in. (122 × 91 cm), 2025. On view. From the <em>Rooms at dawn</em> series.</li>
           <li><strong><em>Hours, before noon</em></strong> — oil on linen, 60 × 48 in. (152 × 122 cm), 2025. On view. From the <em>Rooms at dawn</em> series.</li>
@@ -252,11 +374,12 @@
           <li><strong><em>Quiet hour</em></strong> — charcoal on paper, 22 × 30 in. (56 × 76 cm), 2025. Sold.</li>
           <li><strong><em>Studio floor, October</em></strong> — oil on linen, 30 × 40 in. (76 × 102 cm), 2023. Sold. From the <em>Interiors</em> series.</li>
         </ol>
+        <p>Inquire about available works: <a href="mailto:studio@ronklimovsky.com?subject=Acquisition%20inquiry">studio@ronklimovsky.com</a>.</p>
       </section>
 
-      <section aria-labelledby="editions" id="editions">
-        <h2 id="editions">Editions and prints</h2>
-        <p>Hand-pulled intaglio prints from copper and zinc plates. Numbered and signed. Never re-issued.</p>
+      <section id="editions" aria-labelledby="editions-h">
+        <h2 id="editions-h">Editions and prints — limited-edition intaglio</h2>
+        <p>Hand-pulled intaglio prints from copper and zinc plates. Numbered and signed. Never re-issued. All prices in US dollars.</p>
         <ul>
           <li><em>Sunrise, study I</em> — edition of 30, 12 × 16 in., $420.</li>
           <li><em>Window, plate II</em> — edition of 25, 11 × 14 in., $380.</li>
@@ -267,8 +390,8 @@
         </ul>
       </section>
 
-      <section aria-labelledby="exhibitions" id="exhibitions">
-        <h2 id="exhibitions">Exhibitions</h2>
+      <section id="exhibitions" aria-labelledby="exhibitions-h">
+        <h2 id="exhibitions-h">Exhibitions — upcoming, current, and past</h2>
 
         <h3>Upcoming</h3>
         <article>
@@ -297,15 +420,15 @@
         </article>
       </section>
 
-      <section aria-labelledby="inquire" id="inquire">
-        <h2 id="inquire">Inquire</h2>
+      <section id="inquire" aria-labelledby="inquire-h">
+        <h2 id="inquire-h">Inquire — buy directly from the studio</h2>
         <p>Write directly to the studio: <a href="mailto:studio@ronklimovsky.com">studio@ronklimovsky.com</a>. Replies arrive within a few days.</p>
         <p>Acceptable reasons to write: acquisition or commission, press and interviews, studio visits during open-studio windows, gallery and curator correspondence, edition shop questions.</p>
       </section>
 
       <footer>
-        <p>© 2026 Ron Klimovsky. All rights reserved.</p>
-        <p><a href="/sitemap.xml">Sitemap</a> · <a href="/llms.txt">For AI agents</a></p>
+        <p>© 2026 Ron Klimovsky. All rights reserved. Tarrytown, NY · United States.</p>
+        <p><a href="/sitemap.xml">Sitemap</a> · <a href="/llms.txt">For AI agents</a> · <a href="/humans.txt">Humans</a></p>
       </footer>
     </main>
   </div>

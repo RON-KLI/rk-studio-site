@@ -19,9 +19,9 @@ function OnView({ onSelect, onInquire }) {
   });
 
   return (
-    <section className="page-enter" style={{ position: "relative", padding: "64px 32px 144px", maxWidth: 1280, margin: "0 auto" }}>
+    <section className="page-enter onview-pad" style={{ position: "relative", padding: "64px 32px 144px", maxWidth: 1280, margin: "0 auto" }}>
       {/* Page header */}
-      <header style={{ marginBottom: 56 }}>
+      <header className="onview-header" style={{ marginBottom: 56 }}>
         <Eyebrow>On view · 2026-7</Eyebrow>
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginTop: 12, gap: 32, flexWrap: "wrap" }}>
           <h1 style={{
@@ -45,6 +45,7 @@ function OnView({ onSelect, onInquire }) {
 
       {/* Floating glass dock — appears on scroll */}
       <div
+        className="onview-filter-dock"
         style={{
           position: "fixed",
           left: 0, right: 0, top: 88,
@@ -69,7 +70,7 @@ function OnView({ onSelect, onInquire }) {
       </div>
 
       {/* Grid */}
-      <div style={{
+      <div className="onview-grid" style={{
         display: "grid",
         gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
         gap: "var(--grid-gap, 32px)"

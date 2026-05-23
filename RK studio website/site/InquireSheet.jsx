@@ -29,6 +29,7 @@ function InquireSheet({ open, onClose, work }) {
   return (
     <div
       onClick={onClose}
+      className="inquire-scrim"
       style={{
         position: "fixed", inset: 0,
         background: open ? "rgba(26,20,16,0.25)" : "transparent",
@@ -159,7 +160,7 @@ function InquireSheet({ open, onClose, work }) {
               </div>
             </div>
 
-            <div style={{ display: "flex", gap: 8, marginTop: 24, alignItems: "center" }}>
+            <div className="sheet-actions" style={{ display: "flex", gap: 8, marginTop: 24, alignItems: "center" }}>
               <PrimaryBtn type="submit" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
                 <EnvelopeIcon size={13} /> Send inquiry
               </PrimaryBtn>
@@ -171,7 +172,7 @@ function InquireSheet({ open, onClose, work }) {
                 color: "var(--ink-3)", border: 0, fontSize: 13, fontWeight: 500, cursor: "pointer"
               }}>
               Cancel</button>
-              <div style={{ marginLeft: "auto", fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--ink-3)", letterSpacing: "0.06em" }}>
+              <div className="sheet-esc-hint" style={{ marginLeft: "auto", fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--ink-3)", letterSpacing: "0.06em" }}>
                 ESC TO CLOSE
               </div>
             </div>

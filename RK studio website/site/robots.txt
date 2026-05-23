@@ -1,6 +1,7 @@
 # Ron Klimovsky Studio — robots.txt
 # Welcome. The studio site is a single page; everything is public —
 # except the private studio backstage, which lives at /admin.
+# AI agents: see /llms.txt for a structured studio summary.
 
 User-agent: *
 Allow: /
@@ -9,7 +10,8 @@ Disallow: /admin/
 Disallow: /*?admin
 Disallow: /backstage
 
-# AI crawlers — explicitly allowed
+# ─── AI training & retrieval crawlers — explicitly allowed ────────────────
+# OpenAI
 User-agent: GPTBot
 Allow: /
 
@@ -19,6 +21,7 @@ Allow: /
 User-agent: ChatGPT-User
 Allow: /
 
+# Anthropic
 User-agent: ClaudeBot
 Allow: /
 
@@ -28,22 +31,88 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# Perplexity
 User-agent: PerplexityBot
 Allow: /
 
 User-agent: Perplexity-User
 Allow: /
 
+# Google
 User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+# Apple
+User-agent: Applebot
 Allow: /
 
 User-agent: Applebot-Extended
 Allow: /
 
+# Common Crawl (used by most LLM training sets)
 User-agent: CCBot
 Allow: /
 
+# Meta / Facebook
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+# ByteDance
 User-agent: Bytespider
+Allow: /
+
+# Amazon
+User-agent: Amazonbot
+Allow: /
+
+# Microsoft / Bing
+User-agent: bingbot
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+User-agent: cohere-training-data-crawler
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+
+# Diffbot (structured data extraction)
+User-agent: Diffbot
+Allow: /
+
+# You.com
+User-agent: YouBot
+Allow: /
+
+# Mistral
+User-agent: MistralAI-User
+Allow: /
+
+# xAI / Grok
+User-agent: xAI-Bot
+Allow: /
+
+# Brave Search
+User-agent: BraveBot
 Allow: /
 
 Sitemap: https://ronklimovsky.com/sitemap.xml

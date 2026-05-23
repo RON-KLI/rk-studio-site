@@ -17,13 +17,18 @@ function ArtworkDetail({ work, onBack, onInquire, onSelect }) {
     <section className="page-enter" style={{ position: "relative", paddingBottom: 140 }}>
       {/* Ambient tint behind the page */}
       <div aria-hidden style={{
-        position: "absolute", top: 0, left: 0, right: 0, height: 720,
-        background: `radial-gradient(ellipse 80% 60% at 50% 0%, var(--bone) 0%, var(--paper-2) 40%, transparent 80%)`,
+        position: "absolute", top: 0, left: 0, right: 0, height: 820,
+        background:
+          "radial-gradient(ellipse 90% 70% at 50% 0%, " +
+            "var(--bone) 0%, " +
+            "var(--bone) 20%, " +
+            "var(--paper-2) 55%, " +
+            "transparent 100%)",
         pointerEvents: "none",
         zIndex: 0
       }} />
 
-      <div style={{ position: "relative", zIndex: 1, padding: "32px 32px 0", maxWidth: 1280, margin: "0 auto" }}>
+      <div className="artwork-back-row" style={{ position: "relative", zIndex: 1, padding: "32px 32px 0", maxWidth: 1280, margin: "0 auto" }}>
         <button onClick={onBack} className="press ulink" style={{
           display: "inline-flex", alignItems: "center", gap: 8,
           padding: "8px 0", color: "var(--ink-2)",
@@ -96,13 +101,13 @@ function ArtworkDetail({ work, onBack, onInquire, onSelect }) {
 
       {/* Related */}
       {related.length > 0 &&
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 1280, margin: "0 auto", padding: "0 32px" }}>
+      <div className="artwork-related" style={{ position: "relative", zIndex: 1, maxWidth: 1280, margin: "0 auto", padding: "0 32px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 20 }}>
             <div>
               <h2 style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 400, margin: 0, letterSpacing: "-0.02em" }}>View more</h2>
             </div>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(related.length, 4)}, 1fr)`, gap: 18 }}>
+          <div className="artwork-related-grid" style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(related.length, 4)}, 1fr)`, gap: 18 }}>
             {related.map((r) =>
           <button
             key={r.id}
@@ -208,6 +213,7 @@ function ArtworkCarousel({ work, tint1, tint2, tintDeep }) {
     <div>
       {/* Stage */}
       <div
+        className="artwork-carousel-stage"
         style={{ position: "relative", aspectRatio: "4/5", borderRadius: 4, overflow: "hidden" }}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}>

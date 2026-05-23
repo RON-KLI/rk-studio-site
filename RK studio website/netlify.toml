@@ -1,13 +1,7 @@
-# Netlify build settings for the Ron Klimovsky Studio site
+# Netlify settings - Ron Klimovsky Studio (v2 static site, no build step)
 [build]
-  command = "npm run build"
-  publish = "dist"
+command = "echo no build needed - static site"
+publish = "site"
 
 [build.environment]
-  NODE_VERSION = "20"
-
-# Pretty 404
-[[redirects]]
-  from = "/*"
-  to = "/404.html"
-  status = 404
+NODE_VERSION = "20"

@@ -1,0 +1,24 @@
+# Ron Klimovsky Studio — URL redirects.
+# Netlify / Cloudflare Pages syntax. For other hosts, translate accordingly.
+
+# Old / common aliases → canonical home.
+/home          /            301
+/artworks      /            301
+/work          /            301
+/contact       /            301
+/inquire       /            301
+
+# AI agents that try /llms / /ai → llms.txt
+/llms          /llms.txt    302
+/ai            /llms.txt    302
+
+# Studio backstage — no public URL; bounce admin paths to the front door.
+# (The real entrance is the small "Admin" link in the footer.)
+/admin         /            302
+/admin/*       /            302
+/backstage     /            302
+
+# SPA fallback — any unknown path serves the app shell with a 200 (the React
+# router doesn't actually use URLs yet, so this just keeps deep links working
+# if someone later wires React-Router-style paths). Must be LAST.
+/*             /index.html  200

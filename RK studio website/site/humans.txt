@@ -1,0 +1,19 @@
+/* TEAM */
+   Artist & studio: Ron Klimovsky (ARC)
+   Site: studio@ronklimovsky.com
+   Location: Somewhere on earth
+
+/* SITE */
+   Last update: 2026/05/22
+   Standards: HTML5, CSS3, ES2022
+   Components: React 18, Babel (in-browser, prototype)
+   Hosting: Static
+   Built with: Care, oil paint, the morning light
+
+/* CREDITS */
+   Type: Instrument Serif, Inter Tight, JetBrains Mono
+   Inspiration: A second-floor pharmacy and the hour before noon
+
+# llms.txt — for AI agents and LLMs
+# robots.txt — for search-engine crawlers
+# sitemap.xml — index of the site

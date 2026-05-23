@@ -1,0 +1,23 @@
+{
+  "name": "Ron Klimovsky Studio",
+  "short_name": "RK Studio",
+  "description": "Ron Klimovsky (ARC) — multidisciplinary visual artist. Current paintings, drawings, intaglio editions, and exhibitions, direct from the studio.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FBF6EC",
+  "theme_color": "#FBF6EC",
+  "lang": "en",
+  "categories": ["art", "lifestyle", "shopping"],
+  "icons": [
+    { "src": "/assets/logo.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "On view",     "short_name": "On view",     "url": "/#on-view" },
+    { "name": "Exhibitions", "short_name": "Exhibitions", "url": "/#exhibitions" },
+    { "name": "Inquire",     "short_name": "Inquire",     "url": "/#inquire" }
+  ]
+}

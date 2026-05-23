@@ -1,0 +1,379 @@
+/* =========================================================
+   Ron Klimovsky Studio — Design Tokens
+   "90% white & off-white, 10% sunrise."
+   Inspired by iOS 26 liquid glass: minimal, soft, luminous.
+   ========================================================= */
+
+/* ---------- Fonts ---------- */
+/* Display: Fraunces is intentionally avoided.
+   We use Instrument Serif for editorial display (free, elegant, italic-leaning),
+   Inter Tight for UI, and JetBrains Mono for mono. Substitutions noted in README. */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* =====================================================
+     COLORS — 90% off-white surfaces
+     ===================================================== */
+
+  /* Whites & off-whites (the dominant 90%) */
+  --paper:        #FBF8F4;   /* primary surface — warm off-white, slight cream */
+  --paper-2:      #F4EFE8;   /* secondary surface — slightly warmer */
+  --paper-3:      #ECE5DB;   /* tertiary surface / dividers */
+  --bone:         #FFFEFB;   /* near-pure white with warmth */
+  --pure-white:   #FFFFFF;   /* reserved for liquid-glass highlights */
+  --mist:         #E6DED2;   /* hairline borders */
+
+  /* Inks (text on paper) */
+  --ink-1:        #1A1410;   /* primary text — warm near-black */
+  --ink-2:        #4A3E33;   /* secondary text */
+  --ink-3:        #80705F;   /* tertiary / captions */
+  --ink-4:        #B8A893;   /* disabled / placeholders */
+
+  /* =====================================================
+     SUNRISE — the 10% accent palette
+     Extracted from the four-band reference.
+     ===================================================== */
+
+  /* Band 1 — Burn (deep red → orange) */
+  --burn-deep:    #5A1A0A;
+  --burn:         #C0341A;
+  --burn-bright:  #FF4A1C;
+
+  /* Band 2 — Dawn sky (blue → pink → peach) */
+  --dawn-blue:    #4A7FB8;
+  --dawn-mauve:   #C99AAF;
+  --dawn-peach:   #FF9A75;
+
+  /* Band 3 — Gold hour (charcoal → gold → cream) */
+  --gold-deep:    #2B2418;
+  --gold:         #C99A3D;
+  --gold-cream:   #F4E4B8;
+
+  /* Band 4 — Amber glow (white → amber) */
+  --amber-pale:   #FFF4DC;
+  --amber:        #FFB347;
+  --amber-deep:   #E8801A;
+
+  /* Primary sunrise — the headline accent.
+     The flat orange has been retired in favour of a soft, animated
+     gradient (see --accent-grad below). These solid tokens are kept
+     as fallbacks for places that need a single colour — buttons,
+     borders, focus rings — and now resolve to a soft peach so they
+     read as part of the gradient family. */
+  --sunrise:      #FFB78A;   /* soft peach — the flat fallback */
+  --sunrise-soft: #FFE6D5;
+  --sunrise-deep: #E89B6F;
+
+  /* =====================================================
+     SEMANTIC
+     ===================================================== */
+  --bg:           var(--paper);
+  --bg-elevated:  var(--bone);
+  --bg-sunken:    var(--paper-2);
+  --fg:           var(--ink-1);
+  --fg-muted:     var(--ink-2);
+  --fg-subtle:    var(--ink-3);
+  --fg-disabled:  var(--ink-4);
+  --border:       var(--mist);
+  --border-soft:  rgba(26, 20, 16, 0.06);
+  --accent:       var(--sunrise);
+  --accent-soft:  var(--sunrise-soft);
+  /* Use --accent-grad anywhere you want the signature studio look.
+     Roughly: 70% creamy white, 12% peach, 12% baby blue, 6% colourful pop.
+     Apply via `background: var(--accent-grad)` or the `.accent-text` /
+     `.accent-bg` utility classes (which add the slow animated sweep). */
+  --accent-grad: linear-gradient(105deg,
+    #FFFEFB 0%,
+    #FFF8F1 30%,
+    #FFE2C9 44%,
+    #FFC4A0 52%,
+    #FBDDD2 60%,
+    #D7E8F5 70%,
+    #BCD6EA 78%,
+    #E8C9D8 86%,
+    #FFFEFB 100%
+  );
+  --accent-grad-soft: linear-gradient(120deg,
+    #FFFEFB 0%,
+    #FFEFE0 40%,
+    #FFE2C9 55%,
+    #ECE6F2 75%,
+    #DDE8F2 100%
+  );
+
+  /* Status (kept in sunrise family — no foreign greens/reds) */
+  --status-positive: #8A9A5B;   /* desaturated olive — readable on paper */
+  --status-warning:  var(--amber-deep);
+  --status-danger:   var(--burn);
+
+  /* =====================================================
+     LIQUID GLASS — translucency tokens
+     Used on overlays, nav bars, modals, floating panels
+     ===================================================== */
+  --glass-bg:           rgba(255, 254, 251, 0.62);
+  --glass-bg-strong:    rgba(255, 254, 251, 0.78);
+  --glass-bg-tint:      rgba(255, 196, 160, 0.10);  /* soft peach tint */
+  --glass-border:       rgba(255, 255, 255, 0.7);
+  --glass-edge:         rgba(26, 20, 16, 0.08);
+  --glass-blur:         saturate(180%) blur(20px);
+  --glass-blur-strong:  saturate(200%) blur(32px);
+
+  /* =====================================================
+     GRADIENTS — sunrise instruments
+     ===================================================== */
+  /* Sunrise gradient — soft, multi-hue sweep (replaces the old flat-orange
+     ramp). Same direction as before (180deg / top→bottom) so existing
+     vertical placements still feel right. */
+  --grad-sunrise:    linear-gradient(180deg,
+    #FFFEFB 0%,
+    #FFF1E0 20%,
+    #FFD9B8 38%,
+    #FBDDD2 52%,
+    #D7E8F5 70%,
+    #BCD6EA 84%,
+    #E8C9D8 100%
+  );
+  --grad-burn:       linear-gradient(180deg, #5A1A0A 0%, #C0341A 60%, #FF4A1C 100%);
+  --grad-dawn:       linear-gradient(180deg, #4A7FB8 0%, #C99AAF 50%, #FF9A75 100%);
+  --grad-gold:       linear-gradient(180deg, #2B2418 0%, #C99A3D 60%, #F4E4B8 100%);
+  --grad-amber:      linear-gradient(180deg, #FFF4DC 0%, #FFB347 100%);
+  --grad-paper:      linear-gradient(180deg, #FBF8F4 0%, #F4EFE8 100%);
+  --grad-glass-sheen: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.0) 100%);
+
+  /* =====================================================
+     TYPOGRAPHY
+     ===================================================== */
+  --font-display: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+  --font-ui:      'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Type scale — generous, editorial */
+  --fs-display-1: clamp(72px, 9vw, 144px);
+  --fs-display-2: clamp(56px, 6vw, 96px);
+  --fs-h1:        clamp(40px, 4.5vw, 64px);
+  --fs-h2:        clamp(32px, 3.2vw, 44px);
+  --fs-h3:        24px;
+  --fs-h4:        20px;
+  --fs-body-lg:   18px;
+  --fs-body:      16px;
+  --fs-body-sm:   14px;
+  --fs-caption:   12px;
+  --fs-micro:     11px;
+
+  /* Line heights */
+  --lh-display:   0.95;
+  --lh-tight:     1.1;
+  --lh-snug:      1.3;
+  --lh-normal:    1.5;
+  --lh-loose:     1.7;
+
+  /* Letter spacing */
+  --tracking-tight:  -0.03em;
+  --tracking-snug:   -0.015em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.04em;
+  --tracking-caps:   0.12em;
+
+  /* Weights */
+  --fw-light:    300;
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+
+  /* =====================================================
+     SPACING — 4px base
+     ===================================================== */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 144px;
+
+  /* =====================================================
+     RADII — soft, iOS-26 leaning
+     ===================================================== */
+  --radius-xs:   6px;
+  --radius-sm:   10px;
+  --radius-md:   16px;
+  --radius-lg:   22px;
+  --radius-xl:   32px;
+  --radius-2xl:  44px;
+  --radius-pill: 999px;
+
+  /* =====================================================
+     SHADOWS — almost imperceptible, layered
+     ===================================================== */
+  --shadow-hairline: 0 0 0 1px rgba(26, 20, 16, 0.04);
+  --shadow-xs:  0 1px 2px rgba(26, 20, 16, 0.04);
+  --shadow-sm:  0 2px 8px rgba(26, 20, 16, 0.05), 0 1px 2px rgba(26, 20, 16, 0.04);
+  --shadow-md:  0 8px 24px rgba(26, 20, 16, 0.07), 0 2px 6px rgba(26, 20, 16, 0.04);
+  --shadow-lg:  0 24px 48px rgba(26, 20, 16, 0.10), 0 4px 12px rgba(26, 20, 16, 0.05);
+  --shadow-xl:  0 40px 80px rgba(26, 20, 16, 0.14), 0 8px 20px rgba(26, 20, 16, 0.06);
+
+  /* Liquid-glass elevation — combines outer shadow + inner highlight */
+  --shadow-glass: 0 8px 32px rgba(26, 20, 16, 0.08),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                  inset 0 -1px 0 rgba(26, 20, 16, 0.04);
+
+  /* Sunrise glow — soft, multi-hue halo for hero accents.
+     Layered peach + baby-blue so it reads as the new gradient family. */
+  --glow-sunrise: 0 0 50px rgba(255, 196, 160, 0.32),
+                  0 0 110px rgba(188, 214, 234, 0.22),
+                  0 0 180px rgba(232, 201, 216, 0.14);
+
+  /* =====================================================
+     MOTION
+     ===================================================== */
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);     /* iOS-leaning */
+  --ease-in-out:   cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1); /* gentle overshoot */
+
+  --dur-fast:      120ms;
+  --dur-base:      220ms;
+  --dur-slow:      400ms;
+  --dur-cinematic: 800ms;
+}
+
+/* =====================================================
+   BASE ELEMENT STYLES
+   ===================================================== */
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg);
+}
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-snug);
+}
+
+h3, .h3 {
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-snug);
+}
+
+h4, .h4 {
+  font-family: var(--font-ui);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-h4);
+  line-height: var(--lh-snug);
+}
+
+.display-1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-display-1);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-tight);
+}
+.display-2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-display-2);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-tight);
+}
+.display-italic { font-style: italic; }
+
+p, .body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  color: var(--fg);
+  text-wrap: pretty;
+}
+.body-lg { font-size: var(--fs-body-lg); line-height: var(--lh-loose); }
+.body-sm { font-size: var(--fs-body-sm); }
+
+.eyebrow {
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+
+.caption {
+  font-size: var(--fs-caption);
+  color: var(--fg-subtle);
+  line-height: var(--lh-snug);
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--paper-2);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  color: var(--ink-2);
+}
+
+/* =====================================================
+   UTILITY CLASSES — liquid glass surfaces
+   ===================================================== */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+}
+.glass-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur-strong);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+}
+
+/* =====================================================
+   ACCENT GRADIENT — the studio signature
+   Replaces the old flat-orange `--sunrise` accent. Use:
+   - `.accent-text` on inline elements for gradient-on-letters
+   - `.accent-bg`   on shapes / fills for the surface treatment
+   ===================================================== */
+.accent-text {
+  background: var(--accent-grad);
+  background-size: 240% 100%;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+  animation: accent-flow 14s ease-in-out infinite;
+}
+.accent-bg {
+  background: var(--accent-grad);
+  background-size: 220% 100%;
+  animation: accent-flow 18s ease-in-out infinite;
+}
+@keyframes accent-flow {
+  0%   { background-position:   0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position:   0% 50%; }
+}

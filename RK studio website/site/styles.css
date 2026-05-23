@@ -1,0 +1,541 @@
+/* =========================================================
+   RK Studio — iOS 26 site
+   Custom styles layered on top of the design-system tokens.
+   ========================================================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background:
+    radial-gradient(ellipse 110% 80% at 50% 0%, #FFFFFF 0%, transparent 60%),
+    linear-gradient(180deg,
+      #FDFBF6 0%,
+      #F7F1E6 55%,
+      #F0E8D7 100%);
+  background-attachment: fixed;
+  color: var(--ink-1);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ----- Dark variant ----- */
+body[data-theme="dark"] {
+  --paper:       #14110D;
+  --paper-2:     #1C1813;
+  --paper-3:     #251F18;
+  --bone:        #1F1B16;
+  --mist:        rgba(255, 246, 230, 0.10);
+  --pure-white:  #FFFFFF;
+
+  --ink-1:       #F4ECDC;
+  --ink-2:       #C7B79E;
+  --ink-3:       #8A7B64;
+  --ink-4:       #5A4F40;
+
+  --bg:          var(--paper);
+  --bg-elevated: var(--bone);
+  --bg-sunken:   #100D09;
+  --fg:          var(--ink-1);
+  --fg-muted:    var(--ink-2);
+  --fg-subtle:   var(--ink-3);
+  --border:      var(--mist);
+
+  --glass-bg:        rgba(28, 22, 16, 0.55);
+  --glass-bg-strong: rgba(28, 22, 16, 0.78);
+  --glass-bg-tint:   rgba(255, 154, 80, 0.10);
+  --glass-border:    rgba(255, 230, 200, 0.10);
+  --glass-edge:      rgba(0, 0, 0, 0.4);
+
+  --shadow-glass: 0 8px 32px rgba(0,0,0,0.5),
+                  inset 0 1px 0 rgba(255, 240, 215, 0.10),
+                  inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* ----- Accent band swaps ----- */
+body[data-accent="burn"] {
+  --accent-1: #FFD4B8;
+  --accent-2: #FF9A75;
+  --accent-3: #FF4A1C;
+  --accent-4: #5A1A0A;
+  --accent-glow: rgba(255, 74, 28, 0.32);
+}
+body[data-accent="dawn"] {
+  --accent-1: #E8DDEC;
+  --accent-2: #C99AAF;
+  --accent-3: #4A7FB8;
+  --accent-4: #2A4A6B;
+  --accent-glow: rgba(74, 127, 184, 0.30);
+}
+body[data-accent="gold"] {
+  --accent-1: #F4E4B8;
+  --accent-2: #C99A3D;
+  --accent-3: #8A6720;
+  --accent-4: #2B2418;
+  --accent-glow: rgba(201, 154, 61, 0.32);
+}
+body[data-accent="amber"] {
+  --accent-1: #FFF4DC;
+  --accent-2: #FFB347;
+  --accent-3: #E8801A;
+  --accent-4: #6B3A0A;
+  --accent-glow: rgba(255, 179, 71, 0.30);
+}
+
+/* ----- Glass intensity tiers ----- */
+body[data-glass="subtle"] {
+  --glass-blur-active: blur(8px) saturate(140%);
+  --glass-blur-active-strong: blur(14px) saturate(160%);
+  --glass-edge-strength: 0.5;
+}
+body[data-glass="medium"] {
+  --glass-blur-active: blur(20px) saturate(180%);
+  --glass-blur-active-strong: blur(32px) saturate(200%);
+  --glass-edge-strength: 1;
+}
+body[data-glass="heavy"] {
+  --glass-blur-active: blur(36px) saturate(220%);
+  --glass-blur-active-strong: blur(56px) saturate(240%);
+  --glass-edge-strength: 1.6;
+}
+
+/* ----- Density ----- */
+body[data-density="quiet"] {
+  --section-pad-y: 144px;
+  --grid-gap: 32px;
+  --card-pad: 26px;
+}
+body[data-density="editorial"] {
+  --section-pad-y: 80px;
+  --grid-gap: 18px;
+  --card-pad: 18px;
+}
+
+/* ----- App scaffolding ----- */
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+/* page transitions */
+.page-enter {
+  animation: pageIn 600ms var(--ease-out) both;
+}
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ----- Thin scrollbar — used inside the Inquire sheet and other modals ----- */
+.thin-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(26,20,16,0.18) transparent;
+}
+.thin-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.thin-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+  background: rgba(26,20,16,0.18);
+  border-radius: 999px;
+}
+.thin-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(26,20,16,0.32);
+}
+
+/* ----- Exhibitions timeline dot — gentle pulse for live statuses ----- */
+@keyframes exhibitionDotPulse {
+  0%, 100% { transform: translateY(-50%) scale(1);    box-shadow: 0 0 0 4px var(--dot-glow, transparent); }
+  50%      { transform: translateY(-50%) scale(1.18); box-shadow: 0 0 0 8px var(--dot-glow-faded, transparent); }
+}
+.exhibition-dot--live {
+  animation: exhibitionDotPulse 3s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+  will-change: transform, box-shadow;
+}
+@media (prefers-reduced-motion: reduce) {
+  .exhibition-dot--live { animation: none; }
+}
+.admin-cols {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+}
+.sources-row {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+@media (max-width: 1100px) {
+  .admin-cols {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 520px) {
+  .sources-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+  }
+}
+
+/* ========================================================================== */
+/*  MOBILE PASS  —  small phones first, but anything narrow than ~720px gets   */
+/*  these overrides. We use a few opt-in classes so each surface stays in      */
+/*  control of when it stacks.                                                  */
+/* ========================================================================== */
+
+/* Show/hide helpers — flip with @media below */
+.mobile-only { display: none; }
+.desktop-only { display: initial; }
+
+/* Generic stack: any element with `data-stack="sm"` becomes 1-col under 720px */
+@media (max-width: 720px) {
+  [data-stack="sm"] {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  [data-stack="sm-tight"] {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .mobile-only  { display: flex !important; }
+  .desktop-only { display: none !important; }
+
+  /* Tighten side padding on page sections */
+  .page-enter > *,
+  section.page-enter {
+    /* keep — individual sections still set their own padding */
+  }
+
+  /* ── Hero — scale display type down so it doesn't overflow ────────────── */
+  .hero-display {
+    font-size: clamp(44px, 13vw, 76px) !important;
+    line-height: 1.0 !important;
+  }
+  .hero-pad {
+    padding: 32px 20px 80px !important;
+  }
+  .hero-min-h {
+    min-height: auto !important;
+  }
+
+  /* ── Artwork detail ───────────────────────────────────────────────────── */
+  .artwork-hero {
+    padding: 16px 20px 56px !important;
+    gap: 40px !important;
+  }
+  .artwork-h1 {
+    font-size: clamp(34px, 9vw, 52px) !important;
+  }
+
+  /* ── About ────────────────────────────────────────────────────────────── */
+  .about-pad {
+    padding: 32px 20px 96px !important;
+  }
+  .about-h1 {
+    font-size: clamp(48px, 14vw, 72px) !important;
+  }
+  .about-portrait {
+    position: static !important;
+    max-width: 320px;
+    margin: 0 auto 32px;
+  }
+
+  /* ── Footer ───────────────────────────────────────────────────────────── */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+  .footer-pad {
+    padding: 56px 20px 32px !important;
+  }
+  .footer-monogram {
+    font-size: 34px !important;
+  }
+  .footer-bottom {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+  }
+
+  /* ── Exhibitions — collapse the rail layout ──────────────────────────── */
+  .exhibitions-pad {
+    padding: 56px 20px 96px !important;
+  }
+  .exhibitions-rail {
+    display: none !important;
+  }
+  .show-row {
+    grid-template-columns: 1fr !important;
+    padding-left: 0 !important;
+    gap: 18px !important;
+  }
+  .show-row__year-row {
+    margin-bottom: 4px;
+  }
+  .show-row__dot {
+    position: static !important;
+    transform: none !important;
+    display: inline-block !important;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .next-show-card {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    padding: 24px !important;
+  }
+
+  /* ── Nav — hide desktop variants, show hamburger ─────────────────────── */
+  .nav-desktop { display: none !important; }
+  .nav-mobile  { display: flex !important; }
+
+  /* ── Inquire / Signup sheet ──────────────────────────────────────────── */
+  .sheet-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── Admin: sidebar becomes horizontal chip strip ────────────────────── */
+  .admin-shell {
+    flex-direction: column !important;
+    min-height: 100vh;
+  }
+  .admin-sidebar {
+    position: sticky !important;
+    top: 0;
+    width: 100% !important;
+    flex: 0 0 auto !important;
+    height: auto !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--mist, #E6DED2) !important;
+    padding: 14px 16px !important;
+    gap: 12px !important;
+    z-index: 5;
+  }
+  .admin-sidebar__header {
+    display: none !important;
+  }
+  .admin-sidebar__nav {
+    flex-direction: row !important;
+    flex: 1;
+    overflow-x: auto;
+    gap: 6px !important;
+    scrollbar-width: none;
+  }
+  .admin-sidebar__nav::-webkit-scrollbar { display: none; }
+  .admin-sidebar__nav-item {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 10px 14px !important;
+    border-radius: 999px !important;
+    white-space: nowrap;
+  }
+  .admin-sidebar__nav-item-sub {
+    display: none !important;
+  }
+  .admin-sidebar__footer {
+    display: none !important;
+  }
+  .admin-main {
+    padding: 28px 18px 56px !important;
+    width: 100% !important;
+  }
+  .admin-header-actions {
+    width: 100%;
+  }
+  .admin-header-actions > * {
+    flex: 1;
+  }
+
+  /* Admin tables → card lists */
+  .admin-table-head { display: none !important; }
+  .admin-mailing-head { display: none !important; }
+
+  .admin-table-row {
+    grid-template-columns: 56px 1fr !important;
+    column-gap: 14px !important;
+    row-gap: 6px !important;
+    padding: 16px !important;
+    align-items: start !important;
+  }
+  .admin-table-row > * { grid-column: 2 !important; }
+  .admin-table-row > *:first-child {
+    grid-column: 1 !important;
+    grid-row: 1 / span 5 !important;
+    align-self: start !important;
+  }
+  .admin-table-row > *:last-child {
+    margin-top: 6px;
+  }
+
+  .admin-mailing-row {
+    grid-template-columns: 1fr !important;
+    row-gap: 4px !important;
+    padding: 16px !important;
+  }
+
+  /* Inquiries — collapse two-pane to single column */
+  .inquiries-pane {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Analytics KPI grid stays auto-fit; sources-row already collapses. */
+  .analytics-pad { padding: 0 !important; }
+
+  /* Modal sheets — softer corners, edge-to-edge */
+  .admin-modal {
+    border-radius: 24px !important;
+    padding: 22px !important;
+    max-height: calc(100vh - 32px) !important;
+  }
+  .artwork-editor-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .artwork-editor-image {
+    max-width: 200px;
+    margin: 0 auto;
+  }
+
+  /* Login card */
+  .admin-login {
+    padding: 32px 22px 24px !important;
+    border-radius: 24px !important;
+  }
+
+  /* Section header — let title wrap and shrink slightly */
+  .admin-section-header h1 {
+    font-size: 36px !important;
+  }
+}
+
+/* Nav desktop wrapper — must use `display: contents` so sticky inside resolves
+   against the body, not the wrapper's natural height (~78px). */
+.nav-desktop { display: contents; }
+@media (min-width: 721px) {
+  .nav-mobile { display: none !important; }
+}
+@media (max-width: 720px) {
+  .nav-desktop { display: none !important; }
+  .nav-desktop > * { display: none !important; }
+  .nav-mobile { display: flex !important; }
+}
+
+/* ----- Liquid glass surface — used by Nav, sheets, chips ----- */
+.lg {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur-active, var(--glass-blur));
+  -webkit-backdrop-filter: var(--glass-blur-active, var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+  position: relative;
+}
+.lg::before {
+  /* top highlight edge — the iOS 26 "light bend" */
+  content: "";
+  position: absolute;
+  top: 0; left: 8%; right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.7) 50%,
+    transparent 100%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.lg-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur-active-strong, var(--glass-blur-strong));
+  -webkit-backdrop-filter: var(--glass-blur-active-strong, var(--glass-blur-strong));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+}
+
+/* Small round liquid-glass buttons (carousel arrows) shouldn't show
+   the top "light bend" — on a 48px circle it reads as a stray white tick. */
+.lg.carousel-arrow::before { display: none; }
+
+/* spring scale on press for anything tagged */
+.press {
+  transition: transform 160ms var(--ease-out), box-shadow 220ms var(--ease-out);
+}
+.press:active { transform: scale(0.97); }
+
+/* hover-lift cards */
+.lift {
+  transition: transform 320ms var(--ease-out), box-shadow 320ms var(--ease-out);
+}
+.lift:hover { transform: translateY(-3px); }
+
+/* squircle clip — iOS app-icon look */
+.squircle {
+  clip-path: path("M 0,40 C 0,12 12,0 40,0 L 60,0 C 88,0 100,12 100,40 L 100,60 C 100,88 88,100 60,100 L 40,100 C 12,100 0,88 0,60 Z");
+}
+
+/* specular sheen used on app-icon tiles */
+.specular::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(155deg,
+    rgba(255,255,255,0.55) 0%,
+    rgba(255,255,255,0.18) 25%,
+    rgba(255,255,255,0) 55%,
+    rgba(0,0,0,0.06) 100%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+  border-radius: inherit;
+}
+
+/* subtle scroll fade so glass nav has something to drink */
+.fade-edge {
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 92%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 0%, #000 92%, transparent 100%);
+}
+
+/* button base */
+button {
+  font-family: var(--font-ui);
+  cursor: pointer;
+}
+button:focus-visible {
+  outline: 2px solid var(--accent-3, var(--sunrise));
+  outline-offset: 2px;
+}
+
+/* scrollbars discreet */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--mist); border-radius: 999px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* small links underline animation */
+.ulink {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+}
+.ulink::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 100%; bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transition: right 280ms var(--ease-out);
+}
+.ulink:hover::after { right: 0; }
+
+/* keep input fonts consistent */
+input, textarea, select { font-family: inherit; }

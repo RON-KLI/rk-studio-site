@@ -1,0 +1,59 @@
+# Ron Klimovsky Studio — HTTP response headers.
+# Recognized by Netlify and Cloudflare Pages out-of-the-box.
+# For nginx/Caddy/Apache, translate these into the equivalent directives.
+
+/*
+  # Force HTTPS for 2 years, include subdomains, eligible for preload list.
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+  # Defense-in-depth — disable browser sniffing & framing.
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # No camera, mic, geolocation, FLoC, etc. — a studio site needs none of these.
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=(), usb=(), magnetometer=(), gyroscope=()
+
+  # Content Security Policy.
+  # 'unsafe-inline' + 'unsafe-eval' are required because we ship Babel-in-
+  # browser. To tighten this — pre-compile the JSX (see DEPLOY.md §2).
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://unpkg.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+
+# Tell every search engine to skip the admin area regardless of how it's
+# reached (in case the noindex meta tag fails or a crawler doesn't run JS).
+/admin*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+  Cache-Control: private, no-store
+
+# Static assets — long-cache + immutable.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+*.css
+  Cache-Control: public, max-age=86400, must-revalidate
+
+*.jsx
+  Cache-Control: public, max-age=86400, must-revalidate
+
+*.js
+  Cache-Control: public, max-age=86400, must-revalidate
+
+/manifest.webmanifest
+  Cache-Control: public, max-age=3600
+  Content-Type: application/manifest+json; charset=utf-8
+
+/.well-known/security.txt
+  Cache-Control: public, max-age=3600
+  Content-Type: text/plain; charset=utf-8
+
+# llms.txt and the SEO companions should be freshly fetchable.
+/llms.txt
+  Cache-Control: public, max-age=3600
+  Content-Type: text/plain; charset=utf-8
+
+/robots.txt
+  Cache-Control: public, max-age=3600
+  Content-Type: text/plain; charset=utf-8
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600

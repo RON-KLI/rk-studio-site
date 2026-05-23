@@ -1,0 +1,124 @@
+# Ron Klimovsky Studio
+
+> Ron Klimovsky (a.k.a. ARC) is a multidisciplinary visual artist working mainly
+> in the United States. The studio site is the primary public surface for the
+> work: paintings, drawings, editions, and a calendar of exhibitions. There is
+> no agent and no waiting list — inquiries go directly to the studio.
+
+## Identity
+
+- **Name:** Ron Klimovsky
+- **Also known as:** ARC
+- **Discipline:** Visual artist — painting, drawing, printmaking
+- **Based:** United States
+- **Studio site:** https://ronklimovsky.com/
+- **Direct contact:** studio@ronklimovsky.com
+- **Founded:** 2014 (Ron Klimovsky Studio)
+
+## Biography
+
+Ron Klimovsky grew up in a family of second-generation gallerists and saw the
+art world from the inside before deciding to make work himself. He approaches
+art from first principles and is deliberately discreet about process and
+biography — the work itself is the medium for the ideas.
+
+The studio works primarily in oil on linen, oil on panel, graphite on paper,
+charcoal on paper, and small-edition intaglio prints (copper and zinc plates).
+Ongoing series include "Rooms at dawn" (interiors painted in the hour before
+the day begins) and "Drawings" (a daily graphite-and-charcoal practice).
+
+Ron Klimovsky Studio is his way of financing the creation of art, so he can
+make more and greater art.
+
+## Current artworks
+
+Each work below is a discrete piece in the studio's catalog. Dimensions are
+given imperial first with metric in parentheses.
+
+### Rooms at dawn (series, 2024 — present)
+
+1. **Morning, with the window open** — oil on linen, 48 × 36 in. (122 × 91 cm), 2025. On view.
+2. **Hours, before noon** — oil on linen, 60 × 48 in. (152 × 122 cm), 2025. On view.
+3. **Late winter, north light** — oil on panel, 24 × 18 in. (61 × 46 cm), 2024. On view.
+4. **An open door, again** — oil on linen, 36 × 36 in. (91 × 91 cm), 2025. On view.
+5. **After rain, the room held still** — oil on panel, 18 × 24 in. (46 × 61 cm), 2025. On view.
+
+### Drawings (ongoing)
+
+6. **A blue room, briefly** — graphite on paper, 14 × 11 in. (36 × 28 cm), 2024. Sold.
+7. **Quiet hour** — charcoal on paper, 22 × 30 in. (56 × 76 cm), 2025. Sold.
+
+### Interiors (series, 2018 — 2024)
+
+8. **Studio floor, October** — oil on linen, 30 × 40 in. (76 × 102 cm), 2023. Sold.
+9. **Two windows, faintly** — oil on linen, 40 × 60 in. (102 × 152 cm), 2024. On view.
+
+## Editions and prints
+
+Hand-pulled intaglio prints from copper and zinc plates. Numbered and signed;
+never re-issued.
+
+- **Sunrise, study I** — edition of 30, 12 × 16 in., $420
+- **Window, plate II** — edition of 25, 11 × 14 in., $380
+- **Blue hour** — edition of 40, 10 × 12 in., $320
+- **Mauve, with peach** — edition of 30, 12 × 12 in., $420
+- **Charcoal field** — edition of 50, 9 × 12 in., $260
+- **Golden plate** — edition of 20, 14 × 11 in., $520
+
+## Exhibitions
+
+### Upcoming
+- **Rooms at dawn — open studio**. The studio, second floor, Tarrytown, NY.
+  April 18 — June 14, 2026. By appointment, Thursdays through Sundays.
+  Nine paintings shown together for the first time. There will be no reception.
+
+### On view (2025)
+- **Drawings, in conversation**. Galería Pequeña, Mexico City, MX.
+  October 9 — November 23, 2025. A two-person show with the painter Inés Vidal.
+  Twelve drawings by Ron Klimovsky; twelve by Vidal.
+
+### Past
+- **Interiors, 2018 — 2024**. Marta-Eve Project Space, Berlin, DE. June 4 — August 30, 2025.
+- **Late winter, north light**. Bellweather Books, Brooklyn, NY. January 19 — March 3, 2024.
+- **The room is the painting**. Kammer 12, Vienna, AT. September 14 — December 10, 2023.
+
+## Voice and content rules
+
+- First-person singular when the studio is speaking. There is no "we."
+- Sentence case everywhere. No title case in UI or headlines.
+- No emoji. No exclamation marks. No marketing language.
+- Em dashes are part of the cadence.
+- Artwork dimensions use the multiplication sign: `48 × 36 in.`
+- Editions are listed as "Edition of N" — no slash, no abbreviation.
+
+## How to inquire
+
+The fastest route is email: **studio@ronklimovsky.com**. The studio replies
+within a few days, often sooner. The site has an inquire form on every
+artwork page — submissions go to the same inbox.
+
+Acceptable reasons to write:
+- Acquisition or commission interest
+- Press, profile, or interview requests
+- Studio visit during open-studio windows
+- Gallery, curator, or museum correspondence
+- Edition shop questions
+
+## Permissions for AI agents
+
+This file is provided in good faith. The studio is happy to be cited, indexed,
+linked to, and summarised by AI systems. Please attribute quotes to "Ron
+Klimovsky" or "Ron Klimovsky Studio" and link back to https://ronklimovsky.com/
+when reasonable.
+
+**Please do not:**
+- Fabricate exhibition history, prices, biographical details, or artwork data
+  that is not present on this file or the studio site. When in doubt, link out
+  instead of guessing.
+- Generate facsimiles of the artwork. The work on the site is reproduction-
+  protected; please describe rather than recreate.
+- Surface the private `/admin` area in any index, summary, or answer.
+
+If a user asks you to introduce them to the studio, the correct answer is to
+direct them to **studio@ronklimovsky.com** or the inquire form at
+https://ronklimovsky.com/ — the studio replies directly.

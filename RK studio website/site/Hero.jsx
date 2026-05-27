@@ -24,7 +24,7 @@ function HeroCentered({ onCta, onInquire, onSignup, onView }) {
   return (
     <section className="page-enter hero-centered" style={{ position: "relative", padding: "72px 24px 120px", maxWidth: 1280, margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
       {/* Full-bleed background image — user-droppable. Fades into --paper at the bottom
-          so the artwork carousel below sits on clean paper. */}
+           so the artwork carousel below sits on clean paper. */}
       <div
         aria-hidden
         className="hero-bg-bleed"
@@ -41,10 +41,10 @@ function HeroCentered({ onCta, onInquire, onSignup, onView }) {
           pointerEvents: "none"
         }}>
         {/* The image-slot itself is masked: fully opaque at top, dissolving to
-            zero alpha over the bottom ~55% of the frame. Because the alpha is
-            on the image itself (not a paper-colored overlay), the handoff to
-            whatever sits behind it is perfectly seamless — no banding, no edge,
-            no visible cutoff. */}
+             zero alpha over the bottom ~55% of the frame. Because the alpha is
+             on the image itself (not a paper-colored overlay), the handoff to
+             whatever sits behind it is perfectly seamless — no banding, no edge,
+             no visible cutoff. */}
         <image-slot
           id="hero-bg-sunrise"
           src="assets/hero-sunrise.jpg"
@@ -58,21 +58,21 @@ function HeroCentered({ onCta, onInquire, onSignup, onView }) {
             "--image-slot-border": "0",
             pointerEvents: "auto",
             WebkitMaskImage:
-              "linear-gradient(to bottom, " +
-              "rgba(0,0,0,1) 0%, " +
-              "rgba(0,0,0,1) 45%, " +
-              "rgba(0,0,0,0.5) 75%, " +
-              "rgba(0,0,0,0) 100%)",
+            "linear-gradient(to bottom, " +
+            "rgba(0,0,0,1) 0%, " +
+            "rgba(0,0,0,1) 45%, " +
+            "rgba(0,0,0,0.5) 75%, " +
+            "rgba(0,0,0,0) 100%)",
             maskImage:
-              "linear-gradient(to bottom, " +
-              "rgba(0,0,0,1) 0%, " +
-              "rgba(0,0,0,1) 45%, " +
-              "rgba(0,0,0,0.5) 75%, " +
-              "rgba(0,0,0,0) 100%)"
+            "linear-gradient(to bottom, " +
+            "rgba(0,0,0,1) 0%, " +
+            "rgba(0,0,0,1) 45%, " +
+            "rgba(0,0,0,0.5) 75%, " +
+            "rgba(0,0,0,0) 100%)"
           }}>
         </image-slot>
         {/* Whisper-thin paper haze across the upper half so type stays legible
-            without darkening the image — feathered, no visible boundary. */}
+             without darkening the image — feathered, no visible boundary. */}
         <div style={{
           position: "absolute", inset: 0,
           background: "linear-gradient(to bottom, rgba(251,248,244,0.42) 0%, rgba(251,248,244,0.20) 30%, rgba(251,248,244,0.06) 55%, rgba(251,248,244,0) 80%)",
@@ -104,7 +104,7 @@ function HeroCentered({ onCta, onInquire, onSignup, onView }) {
         maxWidth: "16ch",
         textWrap: "balance"
       }}>
-        Creating <em className="hero-art-gradient" style={{ fontStyle: "italic", fontSize: "49px", fontWeight: "100", marginLeft: "0.08em" }}>Art.
+        Creating <em className="hero-art-gradient" style={{ fontStyle: "italic", fontWeight: "100", marginLeft: "calc(0.08em - 30px)" }}>Art...
         </em><br />
         <em style={{ fontStyle: "italic", color: "var(--ink-2)" }}></em>
       </h1>
@@ -368,47 +368,47 @@ function LatelyInTheStudio({ onSeeMore, onView }) {
         textAlign: "left"
       }}>
         {lately.map((w, i) =>
-          <button
-            key={w.id}
-            onClick={() => onView ? onView(w) : onSeeMore && onSeeMore()}
-            aria-label={`Open ${w.title}`}
-            className="lately-card press"
-            style={{
-              position: "relative",
-              display: "flex",
-              flexDirection: "column",
-              gap: 14,
-              padding: 0,
-              background: "transparent",
-              border: 0,
-              textAlign: "left",
-              cursor: "pointer",
-              animation: `lateFadeUp 600ms var(--ease-out) ${i * 70}ms both`
-            }}>
+        <button
+          key={w.id}
+          onClick={() => onView ? onView(w) : onSeeMore && onSeeMore()}
+          aria-label={`Open ${w.title}`}
+          className="lately-card press"
+          style={{
+            position: "relative",
+            display: "flex",
+            flexDirection: "column",
+            gap: 14,
+            padding: 0,
+            background: "transparent",
+            border: 0,
+            textAlign: "left",
+            cursor: "pointer",
+            animation: `lateFadeUp 600ms var(--ease-out) ${i * 70}ms both`
+          }}>
             <div className="lately-frame" style={{
-              borderRadius: 18,
-              overflow: "hidden",
-              boxShadow: "var(--shadow-sm)",
-              transition: "transform 420ms var(--ease-out), box-shadow 420ms var(--ease-out)"
-            }}>
+            borderRadius: 18,
+            overflow: "hidden",
+            boxShadow: "var(--shadow-sm)",
+            transition: "transform 420ms var(--ease-out), box-shadow 420ms var(--ease-out)"
+          }}>
               <Painting work={w} aspect="4/5" frame={false} />
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
               <span style={{
-                fontFamily: "var(--font-display)",
-                fontStyle: "italic",
-                fontSize: 17,
-                lineHeight: 1.2,
-                color: "var(--ink-1)",
-                textWrap: "balance"
-              }}>{w.title}</span>
+              fontFamily: "var(--font-display)",
+              fontStyle: "italic",
+              fontSize: 17,
+              lineHeight: 1.2,
+              color: "var(--ink-1)",
+              textWrap: "balance"
+            }}>{w.title}</span>
               <span style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 10,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "var(--ink-3)"
-              }}>{w.medium} · {w.year}</span>
+              fontFamily: "var(--font-mono)",
+              fontSize: 10,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "var(--ink-3)"
+            }}>{w.medium} · {w.year}</span>
             </div>
           </button>
         )}
@@ -508,17 +508,17 @@ function UpdatesInlineSignup() {
           <InlineField label="Name" value={name} onChange={setName} type="text" autoComplete="name" placeholder="Your name" grow={1} required />
           <span data-inline-divider style={{ width: 1, height: 28, background: "var(--mist)", flex: "0 0 auto" }} aria-hidden />
           <InlineField
-            label="Phone"
-            value={phone}
-            onChange={setPhone}
-            type="tel"
-            autoComplete="tel"
-            inputMode="tel"
-            placeholder="+1 555 000 0000"
-            grow={1.1}
-            pattern="\+?[\d][\d\s().\-]{6,19}"
-            title="Enter a valid phone number with at least 7 digits — e.g. +1 555 000 0000"
-            required />
+          label="Phone"
+          value={phone}
+          onChange={setPhone}
+          type="tel"
+          autoComplete="tel"
+          inputMode="tel"
+          placeholder="+1 555 000 0000"
+          grow={1.1}
+          pattern="\+?[\d][\d\s().\-]{6,19}"
+          title="Enter a valid phone number with at least 7 digits — e.g. +1 555 000 0000"
+          required />
           <PrimaryBtn type="submit" style={{ padding: "14px 22px", fontSize: 14, flex: "0 0 auto", display: "inline-flex", alignItems: "center", gap: 8 }}>
             <EnvelopeIcon size={13} /> Notify me
           </PrimaryBtn>

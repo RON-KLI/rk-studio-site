@@ -248,12 +248,12 @@ function ArtworkCarousel({ work, tint1, tint2, tintDeep }) {
         </div>
 
         {/* Arrows */}
-        <button onClick={prev} aria-label="Previous" className="lg press" style={{
+        <button onClick={prev} aria-label="Previous" className="lg press carousel-arrow" style={{
           position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)",
           width: 40, height: 40, borderRadius: 999, border: 0, cursor: "pointer",
           display: "grid", placeItems: "center", color: "var(--ink-1)"
         }}><ArrowIcon size={14} dir="left" /></button>
-        <button onClick={next} aria-label="Next" className="lg press" style={{
+        <button onClick={next} aria-label="Next" className="lg press carousel-arrow" style={{
           position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)",
           width: 40, height: 40, borderRadius: 999, border: 0, cursor: "pointer",
           display: "grid", placeItems: "center", color: "var(--ink-1)"

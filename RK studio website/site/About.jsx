@@ -92,7 +92,7 @@ function PortraitPlate() {
     <div style={{ position: "relative", width: "100%", maxWidth: 420 }}>
       <div style={{ position: "relative", borderRadius: 22, overflow: "hidden", aspectRatio: "4/5", background: "var(--paper-2)", boxShadow: "var(--shadow-md)" }}>
         <img
-          src="assets/studio-portrait.jpg"
+          src="assets/studio-portrait.png"
           alt="Ron Klimovsky in the studio, 2024"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }} />
         

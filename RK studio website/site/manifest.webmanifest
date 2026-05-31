@@ -11,9 +11,9 @@
   "lang": "en",
   "categories": ["art", "lifestyle", "shopping"],
   "icons": [
-    { "src": "/assets/logo.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "/assets/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/assets/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [
     { "name": "On view",     "short_name": "On view",     "url": "/#on-view" },

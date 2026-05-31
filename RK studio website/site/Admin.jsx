@@ -7,7 +7,7 @@
 // (server-side session, OAuth, or a static-site password proxy like Cloudflare
 // Access). Treat the gate below as visual scaffolding only.
 
-const ADMIN_PASSWORD = /*EDITMODE-BEGIN*/{ "password": "369" }/*EDITMODE-END*/;
+const ADMIN_PASSWORD = /*EDITMODE-BEGIN*/{ "password": "3690" }/*EDITMODE-END*/;
 const ADMIN_SESSION_KEY = "rk_admin_session_v1";
 
 // When true, the login card shows the password in plain sight (useful while
@@ -280,7 +280,51 @@ function StatusTag({ status }) {
 
 // ── Sheets dialog — bulk import / export via Google Sheets ─────────────────
 
-function SheetsDialog({ open, mode, onClose, onComplete, sheetName = "Artworks" }) {
+// Per-entity configuration so the dialog speaks accurately whether it's
+// syncing artworks or the mailing list — correct nouns, columns, and the
+// candidate sheets shown in the picker.
+const SHEETS_ENTITIES = {
+  artworks: {
+    nounPlural: "artworks",
+    catalogNoun: "catalog",
+    headerHint: "title, medium, dimensions, year, series, status, price",
+    columns: [
+      ["title", "Title"],
+      ["medium", "Medium"],
+      ["size_in / size_cm", "Dimensions"],
+      ["year", "Year"],
+      ["series", "Series"],
+      ["status", "Status (On view / Sold / Available)"],
+      ["price", "Price"],
+    ],
+    sheets: [
+      { name: "Studio catalog — master", updated: "May 18, 2026", rows: 42, selected: true },
+      { name: "2025 inventory",          updated: "Jan 9, 2026",  rows: 28 },
+      { name: "Editions ledger",         updated: "Apr 22, 2026", rows: 6 },
+    ],
+  },
+  subscribers: {
+    nounPlural: "contacts",
+    catalogNoun: "list",
+    headerHint: "name, email, phone, source, tags, joined",
+    columns: [
+      ["name", "Name"],
+      ["email", "Email"],
+      ["phone", "Phone"],
+      ["source", "Source"],
+      ["tags", "Tags"],
+      ["joined", "Joined"],
+    ],
+    sheets: [
+      { name: "Mailing & phone list — master", updated: "May 21, 2026", rows: 12, selected: true },
+      { name: "Newsletter signups — 2025",      updated: "Dec 30, 2025", rows: 38 },
+      { name: "Open studio RSVPs",               updated: "Apr 16, 2026", rows: 21 },
+    ],
+  },
+};
+
+function SheetsDialog({ open, mode, onClose, onComplete, sheetName = "Artworks", entity = "artworks", count = 0 }) {
+  const cfg = SHEETS_ENTITIES[entity] || SHEETS_ENTITIES.artworks;
   const [step, setStep] = React.useState("connect"); // connect → pick → map → done
   const [progress, setProgress] = React.useState(0);
 
@@ -354,24 +398,20 @@ function SheetsDialog({ open, mode, onClose, onComplete, sheetName = "Artworks" 
         {step === "pick" && (
           <SheetsStep title={mode === "import" ? "Choose the sheet to import" : "Choose a destination"}
             body={mode === "import"
-              ? "Pick a Google Sheet. The first row must be column headers — title, medium, dimensions, year, series, status, price."
+              ? `Pick a Google Sheet. The first row must be column headers — ${cfg.headerHint}.`
               : `A new sheet named "${sheetName} — ${new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}" will be created in the studio's Drive.`}>
-            <SheetRow name="Studio catalog — master" updated="May 18, 2026" rows={42} selected />
-            <SheetRow name="2025 inventory" updated="Jan 9, 2026" rows={28} />
-            <SheetRow name="Editions ledger" updated="Apr 22, 2026" rows={6} />
+            {cfg.sheets.map((s) => (
+              <SheetRow key={s.name} name={s.name} updated={s.updated} rows={s.rows} selected={!!s.selected} />
+            ))}
           </SheetsStep>
         )}
 
         {step === "map" && (
           <SheetsStep title="Map the columns"
             body="The first row of the sheet should be column headers. Match each column to a field on the studio site. Unmapped columns are ignored.">
-            <ColumnMapRow sheet="title" site="Title" />
-            <ColumnMapRow sheet="medium" site="Medium" />
-            <ColumnMapRow sheet="size_in / size_cm" site="Dimensions" />
-            <ColumnMapRow sheet="year" site="Year" />
-            <ColumnMapRow sheet="series" site="Series" />
-            <ColumnMapRow sheet="status" site="Status (On view / Sold / Available)" />
-            <ColumnMapRow sheet="price" site="Price" />
+            {cfg.columns.map(([sheet, site]) => (
+              <ColumnMapRow key={sheet} sheet={sheet} site={site} />
+            ))}
           </SheetsStep>
         )}
 
@@ -395,8 +435,8 @@ function SheetsDialog({ open, mode, onClose, onComplete, sheetName = "Artworks" 
             </div>
             <p style={{ fontSize: 13, color: "var(--ink-3)", marginTop: 8, maxWidth: "36ch", margin: "8px auto 0" }}>
               {mode === "import"
-                ? "9 rows merged into the catalog. 0 conflicts; 3 rows updated; 6 unchanged."
-                : "9 artworks exported. The sheet is in the studio's Google Drive."}
+                ? `${count} rows synced to the ${cfg.catalogNoun}. ${Math.round(count / 3)} updated; ${count - Math.round(count / 3)} unchanged; 0 conflicts.`
+                : `${count} ${cfg.nounPlural} exported. The sheet is in the studio's Google Drive.`}
             </p>
             {mode === "export" && (
               <a href="#" onClick={(e) => e.preventDefault()} style={{ display: "inline-block", marginTop: 14, fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.10em", color: "var(--sunrise)", textTransform: "uppercase" }}>
@@ -412,7 +452,7 @@ function SheetsDialog({ open, mode, onClose, onComplete, sheetName = "Artworks" 
             <AdminBtn onClick={advance} kind="primary">
               {step === "connect" ? "Continue" :
                step === "pick"    ? "Continue" :
-               step === "map"     ? (mode === "import" ? "Import 9 rows" : "Export to sheet") :
+               step === "map"     ? (mode === "import" ? `Import ${count} rows` : "Export to sheet") :
                step === "done"    ? "Done" : "Continue"}
             </AdminBtn>
           )}
@@ -575,7 +615,7 @@ function ArtworksAdmin() {
       </div>
 
       {editing && <ArtworkEditor work={editing} onSave={(patch) => { update(editing.id, patch); setEditing(null); }} onClose={() => setEditing(null)} />}
-      <SheetsDialog open={!!sheets} mode={sheets} onClose={() => setSheets(null)} sheetName="Artworks" />
+      <SheetsDialog open={!!sheets} mode={sheets} onClose={() => setSheets(null)} sheetName="Artworks" entity="artworks" count={items.length} />
     </>
   );
 }
@@ -672,6 +712,7 @@ function InquiriesAdmin() {
 
   const selected = items.find((i) => i.id === selectedId);
   const update = (id, patch) => setItems((xs) => xs.map(x => x.id === id ? { ...x, ...patch } : x));
+  const markAllRead = () => setItems((xs) => xs.map(x => x.status === "new" ? { ...x, status: "read" } : x));
 
   return (
     <>
@@ -682,7 +723,7 @@ function InquiriesAdmin() {
         actions={
           <>
             <AdminBtn>↑ Export to Sheets</AdminBtn>
-            <AdminBtn kind="primary">Mark all read</AdminBtn>
+            <AdminBtn kind="primary" onClick={markAllRead}>Mark all read</AdminBtn>
           </>
         }
       />
@@ -747,7 +788,7 @@ function InquiriesAdmin() {
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 14, gap: 8, flexWrap: "wrap" }}>
                 <div style={{ display: "flex", gap: 8 }}>
                   <AdminBtn onClick={() => update(selected.id, { status: "archived" })}>Archive</AdminBtn>
-                  <AdminBtn onClick={() => update(selected.id, { status: "read" })}>Mark unread</AdminBtn>
+                  <AdminBtn onClick={() => update(selected.id, { status: "new" })}>Mark unread</AdminBtn>
                 </div>
                 <AdminBtn kind="primary" onClick={() => update(selected.id, { status: "replied" })}>Send reply</AdminBtn>
               </div>
@@ -831,7 +872,7 @@ function MailingAdmin() {
         <div>{items.filter(s => s.phone).length} with phone · {items.length} with email</div>
       </div>
 
-      <SheetsDialog open={!!sheets} mode={sheets} onClose={() => setSheets(null)} sheetName="Subscribers" />
+      <SheetsDialog open={!!sheets} mode={sheets} onClose={() => setSheets(null)} sheetName="Subscribers" entity="subscribers" count={items.length} />
     </>
   );
 }
@@ -1083,14 +1124,17 @@ const ANALYTICS_DAILY = (() => {
   return out;
 })();
 
+// The public site is a single page with in-page hash sections (see the
+// SiteNavigation schema + sitemap). Top pages reflect those real anchors —
+// no per-work URLs, which don't exist in this build.
 const ANALYTICS_TOP_PAGES = [
-  { path: "/",                                                       title: "Home",                                    views: 4218, share: 38 },
-  { path: "/on-view",                                                title: "On view",                                  views: 2104, share: 19 },
-  { path: "/work/morning-with-the-window-open",                      title: "Morning, with the window open",            views: 1486, share: 13 },
-  { path: "/exhibitions",                                            title: "Exhibitions",                              views:  942, share:  8 },
-  { path: "/work/hours-before-noon",                                 title: "Hours, before noon",                       views:  814, share:  7 },
-  { path: "/about",                                                  title: "About",                                    views:  712, share:  6 },
-  { path: "/work/an-open-door-again",                                title: "An open door, again",                      views:  486, share:  4 },
+  { path: "/",             title: "Home",         views: 4218, share: 38 },
+  { path: "/#on-view",     title: "On view",       views: 2104, share: 19 },
+  { path: "/#exhibitions", title: "Exhibitions",   views: 1192, share: 11 },
+  { path: "/#worlds",      title: "Worlds",        views: 1024, share:  9 },
+  { path: "/#about",       title: "About",         views:  868, share:  8 },
+  { path: "/#editions",    title: "Editions",      views:  712, share:  6 },
+  { path: "/#notes",       title: "Studio notes",  views:  498, share:  4 },
 ];
 
 const ANALYTICS_SOURCES = [

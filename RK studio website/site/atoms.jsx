@@ -241,6 +241,7 @@ function PrimaryBtn({ children, onClick, style = {}, ...rest }) {
   return (
     <button
       className="press"
+      data-magnet="true"
       onClick={handle}
       style={{
         position: "relative",
@@ -268,6 +269,7 @@ function GhostBtn({ children, onClick, style = {}, ...rest }) {
   return (
     <button
       className="press"
+      data-magnet="true"
       onClick={handle}
       style={{
         position: "relative",
@@ -294,6 +296,7 @@ function GlassBtn({ children, onClick, style = {}, ...rest }) {
   return (
     <button
       className="lg press"
+      data-magnet="true"
       onClick={handle}
       style={{
         position: "relative",

@@ -258,6 +258,55 @@ function App() {
     };
   }, []);
 
+  // Magnetic CTA effect — buttons with data-magnet="true" tilt toward the
+  // pointer when it hovers them. Subtle: a 6px max pull, eased.
+  React.useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const STRENGTH = 0.22; // fraction of (mouse-to-center) distance to follow
+    const MAX_PULL = 8;    // pixels
+
+    function onMove(e) {
+      const el = e.currentTarget;
+      const r = el.getBoundingClientRect();
+      const dx = (e.clientX - (r.left + r.width / 2)) * STRENGTH;
+      const dy = (e.clientY - (r.top + r.height / 2)) * STRENGTH;
+      const cx = Math.max(-MAX_PULL, Math.min(MAX_PULL, dx));
+      const cy = Math.max(-MAX_PULL, Math.min(MAX_PULL, dy));
+      el.style.setProperty("--mx", cx + "px");
+      el.style.setProperty("--my", cy + "px");
+    }
+    function onLeave(e) {
+      const el = e.currentTarget;
+      el.style.setProperty("--mx", "0px");
+      el.style.setProperty("--my", "0px");
+    }
+
+    function attachAll() {
+      const nodes = document.querySelectorAll('[data-magnet="true"]');
+      nodes.forEach((el) => {
+        if (el.__magnetWired) return;
+        el.__magnetWired = true;
+        el.addEventListener("pointermove", onMove);
+        el.addEventListener("pointerleave", onLeave);
+      });
+    }
+
+    attachAll();
+    // Re-attach as React mounts new buttons (page transitions, sheets).
+    const mo = new MutationObserver(attachAll);
+    mo.observe(document.body, { subtree: true, childList: true });
+
+    return () => {
+      mo.disconnect();
+      document.querySelectorAll('[data-magnet="true"]').forEach((el) => {
+        el.removeEventListener("pointermove", onMove);
+        el.removeEventListener("pointerleave", onLeave);
+        el.__magnetWired = false;
+      });
+    };
+  }, []);
+
   return (
     <>
       {screen !== "admin" && <Nav

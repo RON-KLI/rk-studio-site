@@ -94,6 +94,8 @@ function PortraitPlate() {
         <img
           src="assets/studio-portrait.png"
           alt="Ron Klimovsky in the studio, 2024"
+          loading="lazy"
+          decoding="async"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }} />
         
       </div>

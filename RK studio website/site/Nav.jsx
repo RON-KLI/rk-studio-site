@@ -9,7 +9,8 @@ const NAV_ITEMS = [
 { id: "home", label: "Home" },
 { id: "onview", label: "Artworks" },
 { id: "exhibitions", label: "Exhibitions" },
-{ id: "about", label: "About" }];
+{ id: "about", label: "About" },
+{ id: "gallery", label: "Gallery", href: "https://www.edenart.com/artist/ron-klimovsky" }];
 
 
 function Nav({ variant = "pill", current, onNav, onInquire }) {
@@ -149,13 +150,30 @@ function NavMobile({ current, onNav, onInquire, hidden }) {
             <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 2 }}>
               {NAV_ITEMS.map((it) => (
                 <li key={it.id}>
-                  <button onClick={() => go(it.id)} style={{
-                    width: "100%", textAlign: "left", border: 0, cursor: "pointer",
-                    background: current === it.id ? "var(--paper-2)" : "transparent",
-                    padding: "14px 16px", borderRadius: 16,
-                    fontFamily: "var(--font-display)", fontStyle: "italic",
-                    fontSize: 24, color: "var(--ink-1)", letterSpacing: "-0.015em"
-                  }}>{it.label}</button>
+                  {it.href ? (
+                    <a href={it.href} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)} style={{
+                      display: "inline-flex", alignItems: "center", gap: 8,
+                      width: "100%", textAlign: "left", textDecoration: "none",
+                      background: "transparent",
+                      padding: "14px 16px", borderRadius: 16,
+                      fontFamily: "var(--font-display)", fontStyle: "italic",
+                      fontSize: 24, color: "var(--ink-1)", letterSpacing: "-0.015em"
+                    }}>
+                      {it.label}
+                      <svg width="14" height="14" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.5 }} aria-hidden="true">
+                        <path d="M3 7L7 3"></path>
+                        <path d="M3.5 3H7V6.5"></path>
+                      </svg>
+                    </a>
+                  ) : (
+                    <button onClick={() => go(it.id)} style={{
+                      width: "100%", textAlign: "left", border: 0, cursor: "pointer",
+                      background: current === it.id ? "var(--paper-2)" : "transparent",
+                      padding: "14px 16px", borderRadius: 16,
+                      fontFamily: "var(--font-display)", fontStyle: "italic",
+                      fontSize: 24, color: "var(--ink-1)", letterSpacing: "-0.015em"
+                    }}>{it.label}</button>
+                  )}
                 </li>
               ))}
             </ul>
@@ -365,27 +383,47 @@ function NavBar({ current, onNav, onInquire, scrolled, hidden }) {
 // ── Link ────────────────────────────────────────────────────────────────────
 function NavLink({ item, active, onClick }) {
   const [hover, setHover] = React.useState(false);
+  const sharedStyle = {
+    position: "relative",
+    background: active ? "var(--bone)" : hover ? "rgba(0,0,0,0.04)" : "transparent",
+    boxShadow: active ? "var(--shadow-xs)" : "none",
+    border: 0,
+    cursor: "pointer",
+    fontFamily: "var(--font-ui)",
+    fontSize: 13,
+    fontWeight: 500,
+    color: active ? "var(--ink-1)" : "var(--ink-2)",
+    padding: "8px 14px",
+    borderRadius: 999,
+    letterSpacing: "-0.005em",
+    whiteSpace: "nowrap",
+    transition: "all 220ms var(--ease-out)"
+  };
+
+  // External link (e.g. the gallery's representation page) — opens in a new tab.
+  if (item.href) {
+    return (
+      <a
+        href={item.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        style={{ ...sharedStyle, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 5 }}>
+        {item.label}
+        <svg width="9" height="9" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.6, marginTop: -1 }} aria-hidden="true">
+          <path d="M3 7L7 3"></path>
+          <path d="M3.5 3H7V6.5"></path>
+        </svg>
+      </a>);
+  }
+
   return (
     <button
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onClick={onClick}
-      style={{
-        position: "relative",
-        background: active ? "var(--bone)" : hover ? "rgba(0,0,0,0.04)" : "transparent",
-        boxShadow: active ? "var(--shadow-xs)" : "none",
-        border: 0,
-        cursor: "pointer",
-        fontFamily: "var(--font-ui)",
-        fontSize: 13,
-        fontWeight: 500,
-        color: active ? "var(--ink-1)" : "var(--ink-2)",
-        padding: "8px 14px",
-        borderRadius: 999,
-        letterSpacing: "-0.005em",
-        whiteSpace: "nowrap",
-        transition: "all 220ms var(--ease-out)"
-      }}>
+      style={sharedStyle}>
       
       {item.label}
     </button>);

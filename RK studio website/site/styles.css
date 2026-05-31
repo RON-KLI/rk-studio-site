@@ -121,7 +121,13 @@ body[data-density="editorial"] {
 
 /* page transitions */
 .page-enter {
-  animation: pageIn 600ms var(--ease-out) both;
+  /* fill-mode: forwards (not "both") so the resting/base state stays VISIBLE
+     during the play-pending phase. With "both" the from-keyframe (opacity:0)
+     is applied before the animation commits a start frame — if that frame
+     never arrives (print, some headless/embedded contexts, rendering
+     hiccups), the entire page renders blank. "forwards" holds only the end
+     state, so content is always visible even if the animation never runs. */
+  animation: pageIn 600ms var(--ease-out) forwards;
 }
 @keyframes pageIn {
   from { opacity: 0; transform: translateY(8px); }
@@ -737,5 +743,251 @@ button:focus-visible {
 }
 .ulink:hover::after { right: 0; }
 
+/* Artwork detail — meta column un-stickies on narrow screens (1-col stack) */
+@media (max-width: 720px) {
+  .artwork-meta-sticky {
+    position: static !important;
+    top: auto !important;
+  }
+}
+
 /* keep input fonts consistent */
 input, textarea, select { font-family: inherit; }
+
+/* =========================================================
+   Hover + Click choreography
+   A layered set of interaction animations that defer to
+   prefers-reduced-motion. Order matters — later rules win.
+   ========================================================= */
+
+/* Smooth all button transitions by default */
+button, a, [role="button"] {
+  transition:
+    transform 260ms var(--ease-out),
+    box-shadow 320ms var(--ease-out),
+    background 220ms var(--ease-out),
+    color 220ms var(--ease-out),
+    opacity 220ms var(--ease-out),
+    filter 260ms var(--ease-out);
+}
+
+/* .press — hover bloom (scale + warm shadow halo).
+   The :active scale (0.97) defined earlier still wins because
+   :active is more specific in user interaction state. */
+.press {
+  will-change: transform;
+}
+.press:hover {
+  transform: translateY(-1px) scale(1.018);
+  filter: brightness(1.04);
+}
+.press:hover::before {
+  /* gentle scaling of the existing glass top-highlight on hover */
+  opacity: 1;
+}
+
+/* Primary-style dark pill buttons — glowing edge ring on hover */
+.press[style*="var(--ink-1)"]:hover,
+button.press[style*="--ink-1"]:hover {
+  box-shadow:
+    0 8px 24px -8px rgba(26, 20, 16, 0.45),
+    0 0 0 4px rgba(255, 122, 61, 0.10);
+}
+
+/* Active press — quick squish, slightly more pronounced */
+.press:active {
+  transform: scale(0.965);
+  transition-duration: 80ms;
+}
+
+/* .lift — hover lift + subtle shadow. The card itself moves up; any
+   "shine" animation lives on the inner painting surface (below) so it
+   stays aligned with the visible image instead of the outer lift box. */
+.lift {
+  position: relative;
+  isolation: isolate;
+}
+.lift:hover {
+  transform: translateY(-4px);
+}
+.lift:active {
+  transform: translateY(-2px) scale(0.995);
+  transition-duration: 100ms;
+}
+
+/* Painting placeholder — hover kiss-zoom + saturation bloom, plus an
+   internal sheen sweep that's clipped to the painting's own bounds.
+   The artwork tile (.lift) already lifts; this adds image-side life. */
+.lift .painting,
+.artwork-card .painting,
+[data-painting] {
+  transition:
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 600ms var(--ease-out);
+  transform-origin: center 60%;
+  position: relative;
+  overflow: hidden;
+}
+.lift .painting::after,
+.artwork-card .painting::after,
+[data-painting]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.22) 48%,
+    rgba(255, 255, 255, 0.05) 56%,
+    transparent 70%
+  );
+  transform: translateX(-110%);
+  opacity: 0;
+  transition: transform 900ms var(--ease-out), opacity 320ms var(--ease-out);
+  z-index: 2;
+  mix-blend-mode: screen;
+}
+.lift:hover .painting,
+.artwork-card:hover .painting,
+[data-painting]:hover {
+  transform: scale(1.035);
+  filter: saturate(1.08) brightness(1.02);
+}
+.lift:hover .painting::after,
+.artwork-card:hover .painting::after,
+[data-painting]:hover::after {
+  transform: translateX(110%);
+  opacity: 1;
+}
+
+/* Glass pills + chips — subtle hover state.
+   Anything carrying .lg that isn't an arrow gets a tactile lift. */
+.lg.press:hover {
+  border-color: rgba(26, 20, 16, 0.14);
+}
+.lg.carousel-arrow:hover {
+  transform: scale(1.08);
+  filter: brightness(1.06);
+}
+.lg.carousel-arrow:active {
+  transform: scale(0.92);
+}
+
+/* .ulink — extend the underline reveal with a color warmth on hover */
+.ulink:hover {
+  color: var(--ink-1);
+}
+.ulink::after {
+  background: linear-gradient(90deg,
+    currentColor 0%,
+    var(--sunrise, #FF7A3D) 50%,
+    currentColor 100%);
+}
+
+/* Filter / nav chips — anything pill-shaped reacts on hover.
+   Targets buttons with border-radius:999 inline-styled or .pill class. */
+.chip-press {
+  transition:
+    background 220ms var(--ease-out),
+    color 220ms var(--ease-out),
+    transform 220ms var(--ease-out);
+}
+.chip-press:hover {
+  transform: translateY(-1px);
+}
+
+/* Nav items — subtle dot indicator on hover */
+.nav-item {
+  position: relative;
+}
+.nav-item::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  width: 3px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--sunrise, #FF7A3D);
+  transform: translate(-50%, 6px) scale(0);
+  opacity: 0;
+  transition: transform 320ms var(--ease-out), opacity 220ms var(--ease-out);
+}
+.nav-item:hover::before,
+.nav-item[aria-current="page"]::before {
+  transform: translate(-50%, 0) scale(1);
+  opacity: 1;
+}
+
+/* Click halo — a soft expanding ring at every click point.
+   Mounted by App.jsx into [data-click-halo-layer]. */
+[data-click-halo-layer] {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+}
+.click-halo {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 122, 61, 0.55);
+  background: radial-gradient(circle, rgba(255, 122, 61, 0.18) 0%, transparent 60%);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* Magnetic CTA — applied to buttons tagged data-magnet="true".
+   The JS sets --mx / --my as translation values (px). */
+[data-magnet="true"] {
+  transition:
+    transform 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 320ms var(--ease-out),
+    filter 260ms var(--ease-out);
+  transform: translate3d(var(--mx, 0px), var(--my, 0px), 0);
+}
+[data-magnet="true"]:hover {
+  filter: brightness(1.05);
+}
+
+/* Section heading swell — italic display H1s breathe on hover.
+   Used on the hero centred display. */
+.hero-art-gradient {
+  transition: letter-spacing 600ms var(--ease-out), filter 400ms var(--ease-out);
+}
+.hero-display:hover .hero-art-gradient {
+  letter-spacing: 0.005em;
+  filter: saturate(1.15) brightness(1.04);
+}
+
+/* Reduced motion — strip everything decorative */
+@media (prefers-reduced-motion: reduce) {
+  .lift .painting::after,
+  .click-halo { display: none; }
+
+  /* Magnet CTAs must stay VISIBLE under reduced motion — these are the
+     primary call-to-action buttons. Only neutralize the pointer-follow
+     transform (the JS already bails on reduce, so --mx/--my stay 0; this
+     is belt-and-braces). Hiding them removed the main CTAs entirely. */
+  [data-magnet="true"] { transform: none !important; }
+
+  /* Entrance: skip the slide-up for reduced-motion users; content shows
+     immediately at its resting (visible) state. */
+  .page-enter { animation: none !important; }
+
+  .press:hover,
+  .lift:hover,
+  .lg.carousel-arrow:hover,
+  .nav-item::before {
+    transform: none !important;
+    filter: none !important;
+  }
+
+  button, a, [role="button"], .press, .lift, .ulink {
+    transition: none !important;
+  }
+}

@@ -16,6 +16,38 @@ function Footer({ onNav }) {
             <p style={{ marginTop: 18, fontSize: 14.5, color: "var(--ink-2)", lineHeight: 1.6, maxWidth: "36ch" }}>I make things I want to exist and sell them to make more things I want to exist 
 
             </p>
+
+            <a
+              href="https://www.instagram.com/ron_klimovsky_studio?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              target="_blank"
+              rel="noopener noreferrer"
+              className="press"
+              data-no-ripple
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                marginTop: 22,
+                padding: "9px 14px 9px 11px",
+                borderRadius: 999,
+                background: "var(--bone)",
+                border: "1px solid var(--mist)",
+                color: "var(--ink-1)",
+                fontFamily: "var(--font-ui)",
+                fontSize: 13,
+                fontWeight: 500,
+                letterSpacing: "-0.005em",
+                textDecoration: "none",
+                boxShadow: "var(--shadow-sm)"
+              }}
+              aria-label="Ron Klimovsky Studio on Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                <circle cx="12" cy="12" r="4"></circle>
+                <circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"></circle>
+              </svg>
+              <span>@ron_klimovsky_studio</span>
+            </a>
           </div>
 
           <FooterCol title="Studio">

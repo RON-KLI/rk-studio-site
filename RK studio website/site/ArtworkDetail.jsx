@@ -15,15 +15,17 @@ function ArtworkDetail({ work, onBack, onInquire, onSelect }) {
 
   return (
     <section className="page-enter" style={{ position: "relative", paddingBottom: 140 }}>
-      {/* Ambient tint behind the page */}
+      {/* Ambient tint behind the page — soft warm halo that fades
+          into transparency so it blends with the body's own gradient
+          (no flat color band where the overlay ends). */}
       <div aria-hidden style={{
-        position: "absolute", top: 0, left: 0, right: 0, height: 820,
+        position: "absolute", top: 0, left: 0, right: 0, height: 1100,
         background:
-          "radial-gradient(ellipse 90% 70% at 50% 0%, " +
+          "radial-gradient(ellipse 140% 110% at 50% -30%, " +
             "var(--bone) 0%, " +
-            "var(--bone) 20%, " +
-            "var(--paper-2) 55%, " +
-            "transparent 100%)",
+            "rgba(255, 252, 245, 0.55) 28%, " +
+            "rgba(255, 252, 245, 0.18) 55%, " +
+            "transparent 80%)",
         pointerEvents: "none",
         zIndex: 0
       }} />
@@ -39,7 +41,7 @@ function ArtworkDetail({ work, onBack, onInquire, onSelect }) {
       </div>
 
       {/* Hero */}
-      <div className="artwork-hero" data-stack="sm" style={{ position: "relative", zIndex: 1, padding: "32px 32px 80px", maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1.15fr 0.85fr", gap: 80, alignItems: "center" }}>
+      <div className="artwork-hero" data-stack="sm" style={{ position: "relative", zIndex: 1, padding: "12px 32px 80px", maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1.15fr 0.85fr", gap: 80, alignItems: "start" }}>
         {/* Painting carousel */}
         <div style={{ position: "relative" }}>
           <div aria-hidden style={{
@@ -54,7 +56,7 @@ function ArtworkDetail({ work, onBack, onInquire, onSelect }) {
         </div>
 
         {/* Meta */}
-        <div>
+        <div className="artwork-meta-sticky" style={{ position: "sticky", top: 96, alignSelf: "start" }}>
           <Eyebrow style={{ marginBottom: 12 }}>{work.series} · {work.year}</Eyebrow>
           <h1 className="artwork-h1" style={{
             fontFamily: "var(--font-display)",
